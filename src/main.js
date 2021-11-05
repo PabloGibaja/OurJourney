@@ -6,7 +6,7 @@ function generateEarth(){
     //var material = new THREE.MeshBasicMaterial({color:0x0000ff,wireframe:true});
     const loader = new THREE.TextureLoader();
     const material = new THREE.MeshBasicMaterial({
-        map: loader.load('./../assets/1_earth_8k.jpg'),
+        map: loader.load('../../assets/1_earth_8k.jpg'),
         //map: loader.load('../assets/earthmap1k.jpg'),
         
 
