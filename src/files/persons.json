@@ -1,0 +1,15 @@
+{
+    "type": "PersonsCollection",
+    "persons": [
+        {
+            "id": 0,
+            "name": "Pablo Gibaja",
+            "size": 1.0,
+            "color":"0xff0000",
+            "country": "Spain",
+            "city": "Madrid",
+            "lat": "40.416729",
+            "lng": "-3.703339"
+        }
+    ]
+}

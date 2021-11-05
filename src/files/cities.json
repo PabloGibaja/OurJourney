@@ -1,0 +1,13 @@
+{
+    "type": "CitiesCollection",
+    "cities": [
+        {
+            "text": "MAD",
+            "size": 1.0,
+            "country": "Spain",
+            "city": "Madrid",
+            "lat": "40.416729",
+            "lng": "-3.703339"
+        }
+    ]
+}

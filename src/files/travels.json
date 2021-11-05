@@ -1,0 +1,19 @@
+{
+    "type": "TraverlsCollection",
+    "travels": [
+        {
+            "type": "flight",
+            "order": 1,
+            "from" : "MAD",
+            "to": "BKK",
+            "person_id": 0,
+            "date": "Mar 23, 2020",
+            "status": true,
+            "startLat": 40.4839,
+            "startLng": -3.5679,
+            "endLat": 13.6900,
+            "endLng": 100.7501,
+            "arcAlt": 0.25 
+        }        
+    ]
+}
