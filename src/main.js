@@ -36,8 +36,8 @@ function init(){
 
      /* MAIN FLOW */ 
      generateEarth();
-     generateCitiesFromFile("../src/files/cities.json")
-     generateTravelsFromFile("../src/files/travels.json")
+     generateCitiesFromFile("./src/files/cities.json")
+     generateTravelsFromFile("./src/files/travels.json")
 
 }
 
