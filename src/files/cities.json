@@ -40,6 +40,30 @@
             "name": "New York",
             "lat": "40.730610",
             "lng": "-73.935242"
+        },
+        {
+            "text": "MA",
+            "size": 1.0,
+            "country": "Morocco",
+            "name": "Marrakesh",
+            "lat": "31.628674",
+            "lng": "-7.992047"
+        },
+        {
+            "text": "SK",
+            "size": 1.0,
+            "country": "Slovakia",
+            "name": "Bratislava",
+            "lat": "48.148598",
+            "lng": "17.107748"
+        },
+        {
+            "text": "DB",
+            "size": 1.0,
+            "country": "United Arab Emirates",
+            "name": "Dubai",
+            "lat": "25.276987",
+            "lng": "55.296249"
         }
     ]
 }

@@ -38,6 +38,63 @@
             "date": "Mar 23, 2020",
             "status": true,
             "arc": 0.05
-        }          
+        },
+        {
+            "type": "flight",
+            "order": 3,
+            "from": {
+                "text" : "MAD",
+                "lat": "40.416729",
+                "lng": "-3.703339"
+            },
+            "to":{
+                "text": "MA",
+                "lat": "31.628674",
+                "lng": "-7.992047"
+            },
+            "person_id": 0,
+            "person_name": "Pablo Gibaja",
+            "date": "Mar 23, 2020",
+            "status": true,
+            "arc": 0.03
+        },
+        {
+            "type": "flight",
+            "order": 4,
+            "from": {
+                "text" : "MAD",
+                "lat": "40.416729",
+                "lng": "-3.703339"
+            },
+            "to":{
+                "text": "SK",
+                "lat": "48.148598",
+                "lng": "17.107748"
+            },
+            "person_id": 0,
+            "person_name": "Pablo Gibaja",
+            "date": "Mar 23, 2020",
+            "status": true,
+            "arc": 0.03
+        },
+        {
+            "type": "flight",
+            "order": 4,
+            "from": {
+                "text" : "MAD",
+                "lat": "40.416729",
+                "lng": "-3.703339"
+            },
+            "to":{
+                "text": "DB",
+                "lat": "25.276987",
+                "lng": "55.296249"
+            },
+            "person_id": 0,
+            "person_name": "Pablo Gibaja",
+            "date": "Mar 23, 2020",
+            "status": true,
+            "arc": 0.05
+        }               
     ]
 }
