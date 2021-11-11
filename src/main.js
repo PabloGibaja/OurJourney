@@ -1,10 +1,10 @@
 let scene, camera, renderer;
 radiusEarth=1
+//drawRange = 1
 
 let cities_json = loadJSON('./src/files/cities.json');
 let people_json =  loadJSON('./src/files/people.json');
 let travels_json = loadJSON('./src/files/travels.json');
-console.log(cities_json)
 
 // Load JSON text from server hosted file and return JSON parsed object
 function loadJSON(filePath) {
@@ -46,8 +46,8 @@ function init(){
         0.1,  //near plane distance
         1000, //far clipping distance
     );
-    camera.position.x = 1.1; // over europe
-    camera.position.y = 1.1;
+    camera.position.x = 1.25; // over europe
+    camera.position.y = 0.8;
     camera.lookAt(0,0,0) // look at origin
 
     /* LIGHT */
@@ -57,11 +57,14 @@ function init(){
     /* RENDER */ 
     renderer = new THREE.WebGLRenderer({antialias:true});   
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x404040);
+    renderer.setClearColor(0x303030);
     document.body.appendChild(renderer.domElement);
 
     /* CONTROLS */ 
-    var controls = new THREE.OrbitControls(camera, renderer.domElement);  
+    var controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enablePan = false;
+    controls.minDistance = 1.2;
+    controls.maxDistance = 1.6;
     
     /* AXES */ 
     const axesHelper = new THREE.AxesHelper( 5 );
@@ -78,6 +81,10 @@ function init(){
 /*TODO rotate everything when user is not in control*/
 function animate() {
     requestAnimationFrame(animate);
+    scene.rotation.x += 0.000;
+    scene.rotation.y += 0.0002;
+    //drawRange+=1
+    //mesh.geometry.setDrawRange( drawRange-20, drawRange );
     renderer.render(scene, camera);
 }
 
@@ -97,6 +104,7 @@ function generateEarth(){
     
 }
 
+
 /* Receives point1 and point2 in latitude,longitude format, and the arc of the curve*/ 
 function generateTravel(p1,p2,arc){
     from = getCoordinatesFromLatLng(p1.lat,p1.lng,radiusEarth)
@@ -111,9 +119,10 @@ function generateTravel(p1,p2,arc){
         points.push(p)
     }
     let path = new THREE.CatmullRomCurve3(points)
-    const geometry = new THREE.TubeGeometry( path, 20, 0.001, 8, false );
-    const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-    const mesh = new THREE.Mesh( geometry, material );
+     geometry = new THREE.TubeGeometry( path, 20, 0.001, 8, false );
+     //geometry.setDrawRange(drawRange,drawRange+10)
+     material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+     mesh = new THREE.Mesh( geometry, material );
     scene.add( mesh ); 
 }
 
@@ -142,8 +151,7 @@ function getCoordinatesFromLatLng(latitude, longitude, radiusEarth)
    return {x: xPos, y: yPos, z: zPos};
 }
     
-/* Receives a json file with the cities to generate*/
-function generateCitiesFromFile (path){
+function generateCitiesFromFile (){
    cities_array = cities_json.cities
    for (var i=0; i<cities_array.length; i++){
        console.log(cities_array[i].name+" generated at :")
@@ -151,11 +159,10 @@ function generateCitiesFromFile (path){
    }
 }
 
-/* Receives a json file with the travels to generate*/
-function generateTravelsFromFile(path){
+function generateTravelsFromFile(){
     travels_array = travels_json.travels
     for (var i=0; i<travels_array.length; i++){
-        console.log("Travel generated for "+travels_array[i].person_name)
+        console.log("Travels generated for : "+travels_array[i].person_name)
         generateTravel(travels_array[i].from,travels_array[i].to,travels_array[i].arc)
     } 
 }
