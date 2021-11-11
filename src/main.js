@@ -1,88 +1,105 @@
 let scene, camera, renderer;
-
-aspectRatio = window.innerWidth / window.innerHeight
-
-function generateEarth(){
-    //var material = new THREE.MeshBasicMaterial({color:0x0000ff,wireframe:true});
-    const loader = new THREE.TextureLoader();
-    const material = new THREE.MeshBasicMaterial({
-        map: loader.load('./assets/1_earth_8k.jpg'),
-        //map: loader.load('../assets/earthmap1k.jpg'),
-        
-
-      });
-    
-    geometry = new THREE.SphereGeometry(1, 30, 30); //size
-
-    sphere = new THREE.Mesh (geometry, material);
-    sphere.position.x = 0
-    sphere.position.y = 0
-    scene.add(sphere); 
-    console.log('Esfera generada en x: '+ sphere.position.x+' y: '+sphere.position.y+' z: '+sphere.position.z)
-    
-}
+radiusEarth=1
 
 function init(){
-    scene = new THREE.Scene();      //ESCENA
-    camera = new THREE.PerspectiveCamera(  //CAMARA
-        75, //angle of camera 
+    /* SCENE */
+    scene = new THREE.Scene();  
+    
+    /* CAMERA */
+    camera = new THREE.PerspectiveCamera(  
+        90, //angle of camera 
         window.innerWidth / window.innerHeight, //aspect ratio
         0.1,  //near plane distance
         1000, //far clipping distance
     );
-    renderer = new THREE.WebGLRenderer({antialias:true});  //RENDER 
+    camera.position.x = 1.1; // over europe
+    camera.position.y = 1.1;
+    camera.lookAt(0,0,0) // look at origin
+
+    /* LIGHT */
+    const light = new THREE.AmbientLight( 0xfffff0 ); // soft white light
+    scene.add( light );
+
+    /* RENDER */ 
+    renderer = new THREE.WebGLRenderer({antialias:true});   
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0x404040);
     document.body.appendChild(renderer.domElement);
-    var controls = new THREE.OrbitControls(camera, renderer.domElement);  //CONTROLES DE USUARIO
 
-    camera.position.z = 2; // ALEJO LA CAMARA DEL CENTRO DE LA ESCENA
+    /* CONTROLS */ 
+    var controls = new THREE.OrbitControls(camera, renderer.domElement);  
+    
+    /* AXES */ 
+    const axesHelper = new THREE.AxesHelper( 5 );
+    axesHelper.setColors ( 0xff0000, 0x00ff00, 0x0000ff )
+    scene.add( axesHelper );
 
-    //generateCubes(5);
-    //generateSpheres(5)
-    generateEarth();
-    generateCities();
+     /* MAIN FLOW */ 
+     generateEarth();
+     generateCitiesFromFile("../src/files/cities.json")
+    
 
 }
 
+/*TODO rotate everything when user is not in control*/
 function animate() {
     requestAnimationFrame(animate);
-    scene.traverse(function (object){
-        if (object.isMesh === true){
-            object.rotation.x += 0;
-            object.rotation.y += 0;
-        }
-    });
     renderer.render(scene, camera);
 }
 
+/* Generate Earth globe in origin*/
+function generateEarth(){
+    //var material = new THREE.MeshBasicMaterial({color:0x0000ff,wireframe:true});
+    const loader = new THREE.TextureLoader();
+    const material = new THREE.MeshPhongMaterial({
+        map: loader.load('./assets/1_earth_8k.jpg'),
+      });    
+    geometry = new THREE.SphereGeometry(radiusEarth, 128, 128); //size
+    sphere = new THREE.Mesh (geometry, material);
+    sphere.position.x = 0
+    sphere.position.y = 0
+    scene.add(sphere); 
+    console.log('Earth globe generated at x: '+ sphere.position.x+' y: '+sphere.position.y+' z: '+sphere.position.z)
+    
+}
 
-function generateCities(){
+/* Receives lat, long of city and generate the city in the globe */
+function generateCities(lat,long,radiusEarth){
     let city = new THREE.Mesh(
-        new THREE.SphereBufferGeometry(0.005,20,20),
+        new THREE.SphereBufferGeometry(0.003,20,20),
         new THREE.MeshBasicMaterial({color:0xff0000})
     );
-
-    material = new THREE.LineBasicMaterial( { color: 0x0000ff } );
-   
-        //madrid example 
-    lon =  40.5 * Math.PI/180;
-    lat =  87 * Math.PI/180;
-
-    let x = 1.21 * Math.cos(lon)*Math.sin(lat);
-    let y = 1.21 * Math.sin(lon)*Math.sin(lat);
-    let z = 1.21 * Math.cos(lat)
-
-    const points = [];
-    points.push( new THREE.Vector3( 0, 0, 0 ) );
-    points.push( new THREE.Vector3( x, y, z ) );
-    const geometry = new THREE.BufferGeometry().setFromPoints( points );
-    const line = new THREE.Line( geometry, material );
-    scene.add( line );
-    
-    city.position.set(x/1.21,y/1.21,z/1.21)
+    pos = getCoordinatesFromLatLng(lat,-1*long,radiusEarth) 
+    city.position.set(pos.x,pos.y,pos.z)
     scene.add(city)
-    console.log('ciudad generada en'+x+','+y+','+z)
+    console.log('x: '+ city.position.x+' y: '+city.position.y+' z: '+city.position.z)
+}
+
+/* Converts lat, long coordinates to spherical coordinates */
+function getCoordinatesFromLatLng(latitude, longitude, radiusEarth)
+{
+   let latitude_rad = latitude * Math.PI / 180;
+   let longitude_rad = longitude * Math.PI / 180;
+
+   let xPos= radiusEarth * Math.cos(latitude_rad) * Math.cos(longitude_rad);
+   let zPos = radiusEarth * Math.cos(latitude_rad) * Math.sin(longitude_rad);
+   let yPos = radiusEarth * Math.sin(latitude_rad);
+   
+   return {x: xPos, y: yPos, z: zPos};
+}
+    
+/* Receives a json file with the cities to generate*/
+function generateCitiesFromFile (path){
+   var request = new XMLHttpRequest();
+   request.open("GET", path , false);
+   request.send(null)
+   var my_JSON_object = JSON.parse(request.responseText);
+   cities_array = my_JSON_object.cities;
+   console.log(cities_array)
+   for (var i=0; i<cities_array.length; i++){
+       console.log(cities_array[i].name+" generated at :")
+       generateCities(cities_array[i].lat,cities_array[i].lng,radiusEarth)
+   }
 }
 
 function onWindowResize(){
@@ -93,7 +110,6 @@ function onWindowResize(){
 }
 
 window.addEventListener('resize', onWindowResize,false);
-
 init();
 animate();
 
