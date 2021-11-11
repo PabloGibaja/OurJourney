@@ -36,8 +36,8 @@ function init(){
 
      /* MAIN FLOW */ 
      generateEarth();
-     generateCitiesFromFile("./src/files/cities.json")
-     generateTravelsFromFile("./src/files/travels.json")
+     generateCitiesFromFile("./files/cities.json")
+     generateTravelsFromFile("./files/travels.json")
 
 }
 
@@ -116,7 +116,6 @@ function getCoordinatesFromLatLng(latitude, longitude, radiusEarth)
 function generateCitiesFromFile (path){
    var request = new XMLHttpRequest();
    request.open("GET", path , false);
-   request.send(null)
    var my_JSON_object = JSON.parse(request.responseText);
    cities_array = my_JSON_object.cities;
    console.log(cities_array)
@@ -130,7 +129,6 @@ function generateCitiesFromFile (path){
 function generateTravelsFromFile(path){
     var request = new XMLHttpRequest();
     request.open("GET", path , false);
-    request.send(null)
     var my_JSON_object = JSON.parse(request.responseText);
     travels_array = my_JSON_object.travels;
     console.log(travels_array)
