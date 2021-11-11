@@ -36,8 +36,8 @@ function init(){
 
      /* MAIN FLOW */ 
      generateEarth();
-     generateCitiesFromFile("../src/files/cities.json")
-     generateTravelsFromFile("../src/files/travels.json")
+     generateCitiesFromFile("./src/files/cities.json")
+     generateTravelsFromFile("./src/files/travels.json")
 
 }
 
@@ -133,7 +133,7 @@ function generateTravelsFromFile(path){
     request.send(null)
     var my_JSON_object = JSON.parse(request.responseText);
     travels_array = my_JSON_object.travels;
-    console.log(travels_array)
+
     for (var i=0; i<travels_array.length; i++){
         console.log("Travel generated for "+travels_array[i].person_name)
         generateTravel(travels_array[i].from,travels_array[i].to,travels_array[i].arc)
@@ -144,7 +144,6 @@ function onWindowResize(){
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
-    cube.updateProjectionMatrix();
 }
 
 window.addEventListener('resize', onWindowResize,false);
