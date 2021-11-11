@@ -1,19 +1,43 @@
 {
-    "type": "TraverlsCollection",
+    "type": "TravelsCollection",
     "travels": [
         {
             "type": "flight",
             "order": 1,
-            "from" : "MAD",
-            "to": "BKK",
+            "from": {
+                "text" : "MAD",
+                "lat": "40.416729",
+                "lng": "-3.703339"
+            },
+            "to":{
+                "text": "BCN",
+                "lat": "41.390205",
+                "lng": "2.154007"
+            },
             "person_id": 0,
+            "person_name": "Pablo",
             "date": "Mar 23, 2020",
             "status": true,
-            "startLat": 40.4839,
-            "startLng": -3.5679,
-            "endLat": 13.6900,
-            "endLng": 100.7501,
-            "arcAlt": 0.25 
-        }        
+            "arc": 0.01 
+        },
+        {
+            "type": "flight",
+            "order": 2,
+            "from": {
+                "text" : "MAD",
+                "lat": "40.416729",
+                "lng": "-3.703339"
+            },
+            "to":{
+                "text": "NY",
+                "lat": "40.730610",
+                "lng": "-73.935242"
+            },
+            "person_id": 0,
+            "person_name": "Pablo",
+            "date": "Mar 23, 2020",
+            "status": true,
+            "arc": 0.05
+        }          
     ]
 }

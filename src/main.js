@@ -37,7 +37,7 @@ function init(){
      /* MAIN FLOW */ 
      generateEarth();
      generateCitiesFromFile("../src/files/cities.json")
-    
+     generateTravelsFromFile("../src/files/travels.json")
 
 }
 
@@ -63,13 +63,37 @@ function generateEarth(){
     
 }
 
+/* Receives point1 and point2 in latitude,longitude format, and the arc of the curve*/ 
+function generateTravel(p1,p2,arc){
+    console.log("p1:"+p1.lat+p1.lng)
+    console.log("p2:"+p2.lat+p2.lng)
+    from = getCoordinatesFromLatLng(p1.lat,p1.lng,radiusEarth)
+    to = getCoordinatesFromLatLng(p2.lat,p2.lng,radiusEarth)
+    v1 = new THREE.Vector3(from.x,from.y,from.z)
+    v2 = new THREE.Vector3(to.x,to.y,to.z)
+    points = []
+    for (let i=0; i<=20 ; i++){
+        let p = new THREE.Vector3().lerpVectors(v1,v2,i/20)
+        p.normalize()
+        p.multiplyScalar(1 + arc*Math.sin(Math.PI*i/20))
+        points.push(p)
+    }
+    console.log(points)
+    let path = new THREE.CatmullRomCurve3(points)
+    console.log(path)
+    const geometry = new THREE.TubeGeometry( path, 20, 0.001, 8, false );
+    const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+    const mesh = new THREE.Mesh( geometry, material );
+    scene.add( mesh ); 
+}
+
 /* Receives lat, long of city and generate the city in the globe */
-function generateCities(lat,long,radiusEarth){
+function generateCity(lat,long,radiusEarth){
     let city = new THREE.Mesh(
         new THREE.SphereBufferGeometry(0.003,20,20),
         new THREE.MeshBasicMaterial({color:0xff0000})
     );
-    pos = getCoordinatesFromLatLng(lat,-1*long,radiusEarth) 
+    pos = getCoordinatesFromLatLng(lat,long,radiusEarth) 
     city.position.set(pos.x,pos.y,pos.z)
     scene.add(city)
     console.log('x: '+ city.position.x+' y: '+city.position.y+' z: '+city.position.z)
@@ -79,7 +103,7 @@ function generateCities(lat,long,radiusEarth){
 function getCoordinatesFromLatLng(latitude, longitude, radiusEarth)
 {
    let latitude_rad = latitude * Math.PI / 180;
-   let longitude_rad = longitude * Math.PI / 180;
+   let longitude_rad = -(longitude * Math.PI / 180);
 
    let xPos= radiusEarth * Math.cos(latitude_rad) * Math.cos(longitude_rad);
    let zPos = radiusEarth * Math.cos(latitude_rad) * Math.sin(longitude_rad);
@@ -98,8 +122,22 @@ function generateCitiesFromFile (path){
    console.log(cities_array)
    for (var i=0; i<cities_array.length; i++){
        console.log(cities_array[i].name+" generated at :")
-       generateCities(cities_array[i].lat,cities_array[i].lng,radiusEarth)
+       generateCity(cities_array[i].lat,cities_array[i].lng,radiusEarth)
    }
+}
+
+/* Receives a json file with the travels to generate*/
+function generateTravelsFromFile(path){
+    var request = new XMLHttpRequest();
+    request.open("GET", path , false);
+    request.send(null)
+    var my_JSON_object = JSON.parse(request.responseText);
+    travels_array = my_JSON_object.travels;
+    console.log(travels_array)
+    for (var i=0; i<travels_array.length; i++){
+        console.log("Travel generated for "+travels_array[i].person_name)
+        generateTravel(travels_array[i].from,travels_array[i].to,travels_array[i].arc)
+    } 
 }
 
 function onWindowResize(){
