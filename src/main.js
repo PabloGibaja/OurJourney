@@ -1,6 +1,40 @@
 let scene, camera, renderer;
 radiusEarth=1
 
+let cities_json = loadJSON('./src/files/cities.json');
+let people_json =  loadJSON('./src/files/people.json');
+let travels_json = loadJSON('./src/files/travels.json');
+console.log(cities_json)
+
+// Load JSON text from server hosted file and return JSON parsed object
+function loadJSON(filePath) {
+    // Load json file;
+    var json = loadTextFileAjaxSync(filePath, "application/json");
+    // Parse json
+    return JSON.parse(json);
+}   
+  
+  // Load text with Ajax synchronously: takes path to file and optional MIME type
+function loadTextFileAjaxSync(filePath, mimeType)
+  {
+    var xmlhttp=new XMLHttpRequest();
+    xmlhttp.open("GET",filePath,false);
+    if (mimeType != null) {
+      if (xmlhttp.overrideMimeType) {
+        xmlhttp.overrideMimeType(mimeType);
+      }
+    }
+    xmlhttp.send();
+    if (xmlhttp.status==200 && xmlhttp.readyState == 4 )
+    {
+      return xmlhttp.responseText;
+    }
+    else {
+      // TODO Throw exception
+      return null;
+    }
+}
+
 function init(){
     /* SCENE */
     scene = new THREE.Scene();  
@@ -110,12 +144,7 @@ function getCoordinatesFromLatLng(latitude, longitude, radiusEarth)
     
 /* Receives a json file with the cities to generate*/
 function generateCitiesFromFile (path){
-   var request = new XMLHttpRequest();
-   request.open("GET", path , false);
-   request.send(null)
-   var my_JSON_object = JSON.parse(request.responseText);
-   cities_array = my_JSON_object.cities;
-   console.log(cities_array)
+   cities_array = cities_json.cities
    for (var i=0; i<cities_array.length; i++){
        console.log(cities_array[i].name+" generated at :")
        generateCity(cities_array[i].lat,cities_array[i].lng,radiusEarth)
@@ -124,12 +153,7 @@ function generateCitiesFromFile (path){
 
 /* Receives a json file with the travels to generate*/
 function generateTravelsFromFile(path){
-    var request = new XMLHttpRequest();
-    request.open("GET", path , false);
-    request.send(null)
-    var my_JSON_object = JSON.parse(request.responseText);
-    travels_array = my_JSON_object.travels;
-    console.log(travels_array)
+    travels_array = travels_json.travels
     for (var i=0; i<travels_array.length; i++){
         console.log("Travel generated for "+travels_array[i].person_name)
         generateTravel(travels_array[i].from,travels_array[i].to,travels_array[i].arc)
