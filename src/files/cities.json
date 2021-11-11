@@ -5,9 +5,41 @@
             "text": "MAD",
             "size": 1.0,
             "country": "Spain",
-            "city": "Madrid",
+            "name": "Madrid",
             "lat": "40.416729",
             "lng": "-3.703339"
+        },
+        {
+            "text": "BCN",
+            "size": 1.0,
+            "country": "Spain",
+            "name": "Barcelona",
+            "lat": "41.390205",
+            "lng": "2.154007"
+        },
+        {
+            "text": "ROM",
+            "size": 1.0,
+            "country": "Italy",
+            "name": "Rome",
+            "lat": "41.902782",
+            "lng": "12.496366"
+        },
+        {
+            "text": "LON",
+            "size": 1.0,
+            "country": "United Kingdom",
+            "name": "London",
+            "lat": "51.509865",
+            "lng": "-0.118092"
+        },
+        {
+            "text": "NY",
+            "size": 1.0,
+            "country": "United States",
+            "name": "New York",
+            "lat": "40.730610",
+            "lng": "-73.935242"
         }
     ]
 }

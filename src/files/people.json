@@ -1,5 +1,5 @@
 {
-    "type": "PersonsCollection",
+    "type": "PeopleCollection",
     "persons": [
         {
             "id": 0,
