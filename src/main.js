@@ -65,8 +65,6 @@ function generateEarth(){
 
 /* Receives point1 and point2 in latitude,longitude format, and the arc of the curve*/ 
 function generateTravel(p1,p2,arc){
-    console.log("p1:"+p1.lat+p1.lng)
-    console.log("p2:"+p2.lat+p2.lng)
     from = getCoordinatesFromLatLng(p1.lat,p1.lng,radiusEarth)
     to = getCoordinatesFromLatLng(p2.lat,p2.lng,radiusEarth)
     v1 = new THREE.Vector3(from.x,from.y,from.z)
@@ -78,9 +76,7 @@ function generateTravel(p1,p2,arc){
         p.multiplyScalar(1 + arc*Math.sin(Math.PI*i/20))
         points.push(p)
     }
-    console.log(points)
     let path = new THREE.CatmullRomCurve3(points)
-    console.log(path)
     const geometry = new THREE.TubeGeometry( path, 20, 0.001, 8, false );
     const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
     const mesh = new THREE.Mesh( geometry, material );
@@ -133,7 +129,7 @@ function generateTravelsFromFile(path){
     request.send(null)
     var my_JSON_object = JSON.parse(request.responseText);
     travels_array = my_JSON_object.travels;
-
+    console.log(travels_array)
     for (var i=0; i<travels_array.length; i++){
         console.log("Travel generated for "+travels_array[i].person_name)
         generateTravel(travels_array[i].from,travels_array[i].to,travels_array[i].arc)
