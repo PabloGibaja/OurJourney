@@ -2,68 +2,196 @@
     "type": "CitiesCollection",
     "cities": [
         {
-            "text": "MAD",
-            "size": 1.0,
+            "size": 2.0,
             "country": "Spain",
             "name": "Madrid",
+            "continent":"Europe",
             "lat": "40.416729",
             "lng": "-3.703339"
         },
         {
-            "text": "BCN",
             "size": 1.0,
             "country": "Spain",
             "name": "Barcelona",
+            "continent":"Europe",
             "lat": "41.390205",
             "lng": "2.154007"
         },
         {
-            "text": "ROM",
             "size": 1.0,
             "country": "Italy",
             "name": "Rome",
+            "continent":"Europe",
             "lat": "41.902782",
             "lng": "12.496366"
         },
         {
-            "text": "LON",
             "size": 1.0,
             "country": "United Kingdom",
             "name": "London",
+            "continent":"Europe",
             "lat": "51.509865",
             "lng": "-0.118092"
         },
         {
-            "text": "NY",
-            "size": 1.0,
-            "country": "United States",
-            "name": "New York",
-            "lat": "40.730610",
-            "lng": "-73.935242"
-        },
-        {
-            "text": "MA",
-            "size": 1.0,
-            "country": "Morocco",
-            "name": "Marrakesh",
-            "lat": "31.628674",
-            "lng": "-7.992047"
-        },
-        {
-            "text": "SK",
             "size": 1.0,
             "country": "Slovakia",
             "name": "Bratislava",
+            "continent":"Europe",
             "lat": "48.148598",
             "lng": "17.107748"
         },
         {
-            "text": "DB",
+            "size": 1.0,
+            "country": "Portugal",
+            "name": "Lisbon",
+            "continent":"Europe",
+            "lat": "38.736946",
+            "lng": "-9.142685"
+        },
+        {
+            "size": 1.0,
+            "country": "France",
+            "name": "Paris",
+            "continent":"Europe",
+            "lat": "48.864716",
+            "lng": "2.349014"
+        },
+        {
+            "size": 1.0,
+            "country": "Belgium",
+            "name": "Brussels",
+            "continent":"Europe",
+            "lat": "50.8467",
+            "lng": "4.3547"
+        },
+        {
+            "size": 1.0,
+            "country": "Austria",
+            "name": "Viena",
+            "continent":"Europe",
+            "lat": "48.210033",
+            "lng": "16.363449"
+        },
+        {
+            "size": 1.0,
+            "country": "Sweden",
+            "name": "Stockholm",
+            "continent":"Europe",
+            "lat": "59.334591",
+            "lng": "18.063240"
+        },
+        {
+            "size": 1.0,
+            "country": "Vatican",
+            "name": "Vatican",
+            "continent":"Europe",
+            "lat": "41.904755",
+            "lng": "12.454628"
+        },
+        {
+            "size": 1.0,
+            "country": "Andorra",
+            "name": "Andorra La Vella",
+            "continent":"Europe",
+            "lat": "42.506317",
+            "lng": "1.521835"
+        },
+        {
+            "size": 1.0,
+            "country": "Czech Republic",
+            "name": "Prague",
+            "continent":"Europe",
+            "lat": "50.073658",
+            "lng": "14.418540"
+        },
+        {
+            "size": 1.0,
+            "country": "Denmark",
+            "name": "Copenhagen",
+            "continent":"Europe",
+            "lat": "55.676098",
+            "lng": "12.568337"
+        },
+        {
+            "size": 1.0,
+            "country": "Estonia",
+            "name": "Tallin",
+            "continent":"Europe",
+            "lat": "59.436962",
+            "lng": "24.753574"
+        },
+        {
+            "size": 1.0,
+            "country": "Finland",
+            "name": "Helsinki",
+            "continent":"Europe",
+            "lat": "60.192059",
+            "lng": "24.945831"
+        },
+        {
+            "size": 1.0,
+            "country": "Hungary",
+            "name": "Budapest",
+            "continent":"Europe",
+            "lat": "47.497913",
+            "lng": "19.040236"
+        },
+        {
+            "size": 1.0,
+            "country": "Ireland",
+            "name": "Dublin",
+            "continent":"Europe",
+            "lat": "53.350140",
+            "lng": "-6.266155"
+        },
+        {
+            "size": 1.0,
+            "country": "Latvia",
+            "name": "Riga",
+            "continent":"Europe",
+            "lat": "56.946285",
+            "lng": "24.105078"
+        },
+        {
             "size": 1.0,
             "country": "United Arab Emirates",
             "name": "Dubai",
+            "continent":"Asia",
             "lat": "25.276987",
             "lng": "55.296249"
+        },
+        {
+            "size": 1.0,
+            "country": "Turkey",
+            "name": "Ankara",
+            "continent":"Asia",
+            "lat": "39.925533",
+            "lng": "32.866287"
+        },
+        {
+            "size": 1.0,
+            "country": "Turkey",
+            "name": "Istambul",
+            "continent":"Asia",
+            "lat": "41.015137",
+            "lng": "28.979530"
+        },
+        {
+            "size": 1.0,
+            "country": "United States",
+            "name": "New York",
+            "continent":"America",
+            "lat": "40.730610",
+            "lng": "-73.935242"
+        },
+        {
+            "size": 1.0,
+            "country": "Morocco",
+            "name": "Marrakesh",
+            "continent":"Africa",
+            "lat": "31.628674",
+            "lng": "-7.992047"
         }
     ]
 }

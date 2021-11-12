@@ -1,5 +1,14 @@
 let scene, camera, renderer;
 radiusEarth=1
+var focusedItem
+var originalColor
+var travelColor = 0x00ff00
+var cityColor = 0xffffff
+var focusedColor = 0xff0000
+var rotation = 0.0002
+var clicked = new Object
+clicked.value = 0 
+
 //drawRange = 1
 
 let cities_json = loadJSON('./src/files/cities.json');
@@ -64,28 +73,51 @@ function init(){
     var controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enablePan = false;
     controls.minDistance = 1.2;
-    controls.maxDistance = 1.6;
+    controls.maxDistance = 1.8;
     
     /* AXES */ 
     const axesHelper = new THREE.AxesHelper( 5 );
     axesHelper.setColors ( 0xff0000, 0x00ff00, 0x0000ff )
     scene.add( axesHelper );
 
+    /* RAYCASTER */
+    raycaster = new THREE.Raycaster();
+	  mouse = new THREE.Vector2(1,1);
+
      /* MAIN FLOW */ 
      generateEarth();
      generateCitiesFromFile("./src/files/cities.json")
      generateTravelsFromFile("./src/files/travels.json")
+     console.log(scene.children)
+}
 
+/* Restore default colors for meshes not on focus*/
+function restoreColors(){
+  for (let i =0 ; i<scene.children.length;i++){
+    if(scene.children[i].type === "city"){
+      scene.children[i].material.color.set(cityColor)
+    }
+    if(scene.children[i].type === "travel"){
+      scene.children[i].material.color.set(travelColor)
+    }
+  }
 }
 
 /*TODO rotate everything when user is not in control*/
 function animate() {
     requestAnimationFrame(animate);
     scene.rotation.x += 0.000;
-    scene.rotation.y += 0.0002;
+    scene.rotation.y += rotation;
     //drawRange+=1
     //mesh.geometry.setDrawRange( drawRange-20, drawRange );
-    renderer.render(scene, camera);
+    render();
+}
+
+function render() 
+{
+	
+  
+	renderer.render(scene, camera);
 }
 
 /* Generate Earth globe in origin*/
@@ -99,6 +131,7 @@ function generateEarth(){
     sphere = new THREE.Mesh (geometry, material);
     sphere.position.x = 0
     sphere.position.y = 0
+    sphere.name = "earth"
     scene.add(sphere); 
     console.log('Earth globe generated at x: '+ sphere.position.x+' y: '+sphere.position.y+' z: '+sphere.position.z)
     
@@ -106,7 +139,11 @@ function generateEarth(){
 
 
 /* Receives point1 and point2 in latitude,longitude format, and the arc of the curve*/ 
-function generateTravel(p1,p2,arc){
+function generateTravel(travelFromFile){
+    p1 = travelFromFile.from //origin 
+    p2 = travelFromFile.to //destination
+    arc = travelFromFile.arc
+    travelType = travelFromFile.type  //flight | car | ship | train
     from = getCoordinatesFromLatLng(p1.lat,p1.lng,radiusEarth)
     to = getCoordinatesFromLatLng(p2.lat,p2.lng,radiusEarth)
     v1 = new THREE.Vector3(from.x,from.y,from.z)
@@ -118,22 +155,32 @@ function generateTravel(p1,p2,arc){
         p.multiplyScalar(1 + arc*Math.sin(Math.PI*i/20))
         points.push(p)
     }
-    let path = new THREE.CatmullRomCurve3(points)
-     geometry = new THREE.TubeGeometry( path, 20, 0.001, 8, false );
-     //geometry.setDrawRange(drawRange,drawRange+10)
-     material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-     mesh = new THREE.Mesh( geometry, material );
-    scene.add( mesh ); 
+    let path = new THREE.CatmullRomCurve3(points) //all points that form the arc curve
+    geometry = new THREE.TubeGeometry( path, 20, 0.001, 8, false );
+    //geometry.setDrawRange(drawRange,drawRange+10)
+    material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+    travel = new THREE.Mesh( geometry, material );
+    travel.name = travelType+": "+p1.city+"-"+p2.city
+    travel.userData.originalColor = {r: 0, g: 1, b: 0}
+    travel.type = "travel"
+    scene.add( travel ); 
 }
 
 /* Receives lat, long of city and generate the city in the globe */
-function generateCity(lat,long,radiusEarth){
+function generateCity(cityFromFile){
+    lat = cityFromFile.lat
+    long = cityFromFile.lng
+    size = cityFromFile.size
     let city = new THREE.Mesh(
-        new THREE.SphereBufferGeometry(0.003,20,20),
-        new THREE.MeshBasicMaterial({color:0xff0000})
+        new THREE.SphereBufferGeometry(size*0.002,20,20),
+        new THREE.MeshBasicMaterial({color:0xffffff})
     );
     pos = getCoordinatesFromLatLng(lat,long,radiusEarth) 
     city.position.set(pos.x,pos.y,pos.z)
+    city.name = cityFromFile.name
+    city.country = cityFromFile.country
+    city.continent = cityFromFile.continent
+    city.type = "city"
     scene.add(city)
     console.log('x: '+ city.position.x+' y: '+city.position.y+' z: '+city.position.z)
 }
@@ -155,7 +202,7 @@ function generateCitiesFromFile (){
    cities_array = cities_json.cities
    for (var i=0; i<cities_array.length; i++){
        console.log(cities_array[i].name+" generated at :")
-       generateCity(cities_array[i].lat,cities_array[i].lng,radiusEarth)
+       generateCity(cities_array[i])
    }
 }
 
@@ -163,7 +210,7 @@ function generateTravelsFromFile(){
     travels_array = travels_json.travels
     for (var i=0; i<travels_array.length; i++){
         console.log("Travels generated for : "+travels_array[i].person_name)
-        generateTravel(travels_array[i].from,travels_array[i].to,travels_array[i].arc)
+        generateTravel(travels_array[i])
     } 
 }
 
@@ -173,6 +220,68 @@ function onWindowResize(){
     renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
+function onDocumentMouseMove(event)
+{
+	// the following line would stop any other event handler from firing
+	// (such as the mouse's TrackballControls)
+	//event.preventDefault();
+	// update the mouse variable
+  rotation=0
+	mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+	mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  // update the picking ray with the camera and mouse position
+	raycaster.setFromCamera( mouse, camera );
+	// calculate objects intersecting the picking ray
+	var intersects = raycaster.intersectObjects( scene.children );
+
+  for(let i = 0; i<intersects.length ; i++){
+    if (clicked.value!=1 && (intersects[i].object.type === "travel" || intersects[i].object.type === "city")){  //if focus is on travel
+      intersects[i].object.material.color.set( focusedColor );
+      break
+    }
+    else{
+      if (clicked.value===0 ){
+        restoreColors()
+      }
+      
+    }
+  }
+}
+
+
+//TODO sacar el nombre del mesh al clickar 
+function onDocumentMouseDown(event)
+{
+	// the following line would stop any other event handler from firing
+	// (such as the mouse's TrackballControls)
+	//event.preventDefault();
+	// update the mouse variable
+  console.log("Clikado")
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+	mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  raycaster.setFromCamera( mouse, camera );
+	// calculate objects intersecting the picking ray
+	var intersects = raycaster.intersectObjects( scene.children );
+  for(let i = 0; i<intersects.length ; i++){
+    if (intersects[i].object.type === "travel" || intersects[i].object.type === "city"){  //if focus is on travel
+      clicked.value=1
+      clicked.x=mouse.x
+      clicked.y=mouse.y
+      intersects[i].object.material.color.set( focusedColor );
+      break
+    }
+    else{
+      clicked.value=0
+      clicked.x=mouse.x
+      clicked.y=mouse.y
+      restoreColors()
+    }
+  }
+  rotation = 0.0002
+}
+
+document.addEventListener('mousedown', onDocumentMouseDown, false);
+document.addEventListener('mousemove', onDocumentMouseMove, false);
 window.addEventListener('resize', onWindowResize,false);
 init();
 animate();

@@ -5,12 +5,12 @@
             "type": "flight",
             "order": 1,
             "from": {
-                "text" : "MAD",
+                "city" : "Madrid",
                 "lat": "40.416729",
                 "lng": "-3.703339"
             },
             "to":{
-                "text": "BCN",
+                "city": "Barcelona",
                 "lat": "41.390205",
                 "lng": "2.154007"
             },
@@ -24,12 +24,12 @@
             "type": "flight",
             "order": 2,
             "from": {
-                "text" : "MAD",
+                "city" : "Madrid",
                 "lat": "40.416729",
                 "lng": "-3.703339"
             },
             "to":{
-                "text": "NY",
+                "city": "New York",
                 "lat": "40.730610",
                 "lng": "-73.935242"
             },
@@ -43,12 +43,12 @@
             "type": "flight",
             "order": 3,
             "from": {
-                "text" : "MAD",
+                "city" : "Madrid",
                 "lat": "40.416729",
                 "lng": "-3.703339"
             },
             "to":{
-                "text": "MA",
+                "city": "Marrakesh",
                 "lat": "31.628674",
                 "lng": "-7.992047"
             },
@@ -61,15 +61,15 @@
         {
             "type": "flight",
             "order": 4,
-            "from": {
-                "text" : "MAD",
-                "lat": "40.416729",
-                "lng": "-3.703339"
-            },
-            "to":{
-                "text": "SK",
+            "from":{
+                "city": "Bratislava",
                 "lat": "48.148598",
                 "lng": "17.107748"
+            },
+            "to": {
+                "city" : "Madrid",
+                "lat": "40.416729",
+                "lng": "-3.703339"
             },
             "person_id": 0,
             "person_name": "Pablo Gibaja",
@@ -81,12 +81,12 @@
             "type": "flight",
             "order": 4,
             "from": {
-                "text" : "MAD",
+                "city" : "Madrid",
                 "lat": "40.416729",
                 "lng": "-3.703339"
             },
             "to":{
-                "text": "DB",
+                "city": "Dubai",
                 "lat": "25.276987",
                 "lng": "55.296249"
             },
