@@ -163,11 +163,27 @@
         },
         {
             "size": 1.0,
+            "country": "Thailand",
+            "name": "Bangkok",
+            "continent":"Asia",
+            "lat": "13.736717",
+            "lng": "100.523186"
+        },
+        {
+            "size": 1.0,
             "country": "Turkey",
             "name": "Ankara",
             "continent":"Asia",
             "lat": "39.925533",
             "lng": "32.866287"
+        },
+        {
+            "size": 1.0,
+            "country": "Turkey",
+            "name": "Cappadocia",
+            "continent":"Asia",
+            "lat": "38.640388",
+            "lng": "34.846306"
         },
         {
             "size": 1.0,
@@ -192,6 +208,14 @@
             "continent":"Africa",
             "lat": "31.628674",
             "lng": "-7.992047"
+        },
+        {
+            "size": 1.0,
+            "country": "Morocco",
+            "name": "Merzouga",
+            "continent":"Africa",
+            "lat": "31.080168",
+            "lng": "-4.013361"
         }
     ]
 }

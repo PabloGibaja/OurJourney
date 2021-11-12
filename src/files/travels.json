@@ -37,7 +37,7 @@
             "person_name": "Pablo Gibaja",
             "date": "Mar 23, 2020",
             "status": true,
-            "arc": 0.05
+            "arc": 0.09
         },
         {
             "type": "flight",
@@ -94,7 +94,64 @@
             "person_name": "Pablo Gibaja",
             "date": "Mar 23, 2020",
             "status": true,
-            "arc": 0.05
-        }               
+            "arc": 0.09
+        },
+        {
+            "type": "flight",
+            "order": 5,
+            "from": {
+                "city" : "Madrid",
+                "lat": "40.416729",
+                "lng": "-3.703339"
+            },
+            "to":{
+                "city": "Cappadocia",
+                "lat": "38.640388",
+                "lng": "34.846306"
+            },
+            "person_id": 0,
+            "person_name": "Pablo Gibaja",
+            "date": "Mar 23, 2020",
+            "status": true,
+            "arc": 0.02
+        },
+        {
+            "type": "flight",
+            "order": 6,
+            "from":{
+                "city" : "Madrid",
+                "lat": "40.416729",
+                "lng": "-3.703339"
+            },
+            "to": {
+                "city" : "Copenhagen",
+                "lat": "55.676098",
+                "lng": "12.568337"
+            },
+            "person_id": 0,
+            "person_name": "Pablo Gibaja",
+            "date": "Mar 23, 2020",
+            "status": true,
+            "arc": 0.03
+        },
+        {
+            "type": "flight",
+            "order": 6,
+            "from":{
+                "city": "Dubai",
+                "lat": "25.276987",
+                "lng": "55.296249"
+            },
+            "to": {
+                "city" : "Bangkok",
+                "lat": "13.736717",
+                "lng": "100.523186"
+            },
+            "person_id": 0,
+            "person_name": "Pablo Gibaja",
+            "date": "Mar 23, 2020",
+            "status": true,
+            "arc": 0.09
+        }            
     ]
 }

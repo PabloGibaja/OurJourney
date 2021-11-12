@@ -14,6 +14,7 @@ clicked.value = 0
 let cities_json = loadJSON('./src/files/cities.json');
 let people_json =  loadJSON('./src/files/people.json');
 let travels_json = loadJSON('./src/files/travels.json');
+let travelsCollection_json = loadJSON('./src/files/travelsCollection.json');
 
 // Load JSON text from server hosted file and return JSON parsed object
 function loadJSON(filePath) {
@@ -88,7 +89,6 @@ function init(){
      generateEarth();
      generateCitiesFromFile("./src/files/cities.json")
      generateTravelsFromFile("./src/files/travels.json")
-     console.log(scene.children)
 }
 
 /* Restore default colors for meshes not on focus*/
@@ -115,8 +115,6 @@ function animate() {
 
 function render() 
 {
-	
-  
 	renderer.render(scene, camera);
 }
 
@@ -137,6 +135,32 @@ function generateEarth(){
     
 }
 
+
+
+// to use the new travelsCollection model
+function generateJump(jumpFromFile){
+  fromCoordinates = getCoordinatesFromCityName(jump.from) 
+  toCoordinates =  getCoordinatesFromCityName(jump.to)
+  from = getCoordinatesFromLatLng(fromCoordinates.lat,fromCoordinates.lng,radiusEarth)
+  to = getCoordinatesFromLatLng(toCoordinates.lat,toCoordinates.lat,radiusEarth)
+  v1 = new THREE.Vector3(from.x,from.y,from.z)
+  v2 = new THREE.Vector3(to.x,to.y,to.z)
+  points = []
+    for (let i=0; i<=20 ; i++){
+        let p = new THREE.Vector3().lerpVectors(v1,v2,i/20)
+        p.normalize()
+        p.multiplyScalar(1 + arc*Math.sin(Math.PI*i/20))
+        points.push(p)
+    }
+    let path = new THREE.CatmullRomCurve3(points) //all points that form the arc curve
+    geometry = new THREE.TubeGeometry( path, 20, 0.001, 8, false );
+    //geometry.setDrawRange(drawRange,drawRange+10)
+    material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+    jump = new THREE.Mesh( geometry, material );
+    jump.type = jumpFromFile.type //flight | car ...
+    scene.add(jump)
+
+}
 
 /* Receives point1 and point2 in latitude,longitude format, and the arc of the curve*/ 
 function generateTravel(travelFromFile){
@@ -161,7 +185,6 @@ function generateTravel(travelFromFile){
     material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
     travel = new THREE.Mesh( geometry, material );
     travel.name = travelType+": "+p1.city+"-"+p2.city
-    travel.userData.originalColor = {r: 0, g: 1, b: 0}
     travel.type = "travel"
     scene.add( travel ); 
 }
@@ -214,6 +237,15 @@ function generateTravelsFromFile(){
     } 
 }
 
+function getCoordinatesFromCityName(name){
+  for (let i=0; i<cities_json.cities.length;i++){
+    if (cities_json.cities[i].name === name){
+      return {lat: cities_json.cities[i].lat , long: cities_json.cities[i].lng}
+    }
+  }
+    console.log("City not found in cities list: "+name)
+}
+
 function onWindowResize(){
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
@@ -222,16 +254,9 @@ function onWindowResize(){
 
 function onDocumentMouseMove(event)
 {
-	// the following line would stop any other event handler from firing
-	// (such as the mouse's TrackballControls)
-	//event.preventDefault();
-	// update the mouse variable
-  rotation=0
 	mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
 	mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-  // update the picking ray with the camera and mouse position
 	raycaster.setFromCamera( mouse, camera );
-	// calculate objects intersecting the picking ray
 	var intersects = raycaster.intersectObjects( scene.children );
 
   for(let i = 0; i<intersects.length ; i++){
@@ -248,36 +273,32 @@ function onDocumentMouseMove(event)
   }
 }
 
-
 //TODO sacar el nombre del mesh al clickar 
 function onDocumentMouseDown(event)
 {
-	// the following line would stop any other event handler from firing
-	// (such as the mouse's TrackballControls)
-	//event.preventDefault();
-	// update the mouse variable
-  console.log("Clikado")
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
 	mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
   raycaster.setFromCamera( mouse, camera );
 	// calculate objects intersecting the picking ray
 	var intersects = raycaster.intersectObjects( scene.children );
   for(let i = 0; i<intersects.length ; i++){
-    if (intersects[i].object.type === "travel" || intersects[i].object.type === "city"){  //if focus is on travel
+    if (intersects[i].object.type === "travel" || intersects[i].object.type === "city"){ 
       clicked.value=1
       clicked.x=mouse.x
       clicked.y=mouse.y
       intersects[i].object.material.color.set( focusedColor );
+      rotation = 0
       break
     }
     else{
       clicked.value=0
       clicked.x=mouse.x
       clicked.y=mouse.y
+      rotation = 0.0002
       restoreColors()
     }
   }
-  rotation = 0.0002
+  
 }
 
 document.addEventListener('mousedown', onDocumentMouseDown, false);
