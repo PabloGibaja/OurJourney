@@ -1,3 +1,3 @@
 # OurJourney
-Latest deploy: 
+Latest deployment: 
 https://pablogibaja.github.io/OurJourney/
