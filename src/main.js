@@ -13,8 +13,8 @@ clicked.value = 0
 
 let cities_json = loadJSON('./src/files/cities.json');
 let people_json =  loadJSON('./src/files/people.json');
-let travels_json = loadJSON('./src/files/travels.json');
-let travelsCollection_json = loadJSON('./src/files/travelsCollection.json');
+//let travels_json = loadJSON('./src/files/travels.json');
+let travels_json = loadJSON('./src/files/travelsCollection.json');
 
 // Load JSON text from server hosted file and return JSON parsed object
 function loadJSON(filePath) {
@@ -87,8 +87,8 @@ function init(){
 
      /* MAIN FLOW */ 
      generateEarth();
-     generateCitiesFromFile("./src/files/cities.json")
-     generateTravelsFromFile("./src/files/travels.json")
+     generateCitiesFromFile()
+     generateTravelsFromFile()
 }
 
 /* Restore default colors for meshes not on focus*/
@@ -139,12 +139,13 @@ function generateEarth(){
 
 // to use the new travelsCollection model
 function generateJump(jumpFromFile){
-  fromCoordinates = getCoordinatesFromCityName(jump.from) 
-  toCoordinates =  getCoordinatesFromCityName(jump.to)
-  from = getCoordinatesFromLatLng(fromCoordinates.lat,fromCoordinates.lng,radiusEarth)
-  to = getCoordinatesFromLatLng(toCoordinates.lat,toCoordinates.lat,radiusEarth)
+  fromCoordinates = getCoordinatesFromCityName(jumpFromFile.from) 
+  toCoordinates =  getCoordinatesFromCityName(jumpFromFile.to)
+  from = getCoordinatesFromLatLng(fromCoordinates.lat,fromCoordinates.long,radiusEarth)
+  to = getCoordinatesFromLatLng(toCoordinates.lat,toCoordinates.long,radiusEarth)
   v1 = new THREE.Vector3(from.x,from.y,from.z)
   v2 = new THREE.Vector3(to.x,to.y,to.z)
+  arc = jumpFromFile.arc
   points = []
     for (let i=0; i<=20 ; i++){
         let p = new THREE.Vector3().lerpVectors(v1,v2,i/20)
@@ -152,6 +153,7 @@ function generateJump(jumpFromFile){
         p.multiplyScalar(1 + arc*Math.sin(Math.PI*i/20))
         points.push(p)
     }
+    console.log(points)
     let path = new THREE.CatmullRomCurve3(points) //all points that form the arc curve
     geometry = new THREE.TubeGeometry( path, 20, 0.001, 8, false );
     //geometry.setDrawRange(drawRange,drawRange+10)
@@ -230,11 +232,18 @@ function generateCitiesFromFile (){
 }
 
 function generateTravelsFromFile(){
-    travels_array = travels_json.travels
+   /* travels_array = travels_json.travels
     for (var i=0; i<travels_array.length; i++){
         console.log("Travels generated for : "+travels_array[i].person_name)
         generateTravel(travels_array[i])
-    } 
+    } */
+    for (let i=0; i<travels_json.travels.length;i++){
+      console.log("Travel found: "+travels_json.travels[i].travel_name)
+      for(let j=0;travels_json.travels[i].jumps.length;j++){
+        console.log("Jump found: "+travels_json.travels[i].jumps[j].from+"<->"+travels_json.travels[i].jumps[j].to)
+        generateJump(travels_json.travels[i].jumps[j])
+      }
+    }
 }
 
 function getCoordinatesFromCityName(name){
