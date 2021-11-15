@@ -1,0 +1,62 @@
+{
+        "travels": [
+            {
+                "travel_id":0,
+                "travel_name":"Viaje al Báltico",
+                "jumps":[
+                    {
+                        "type": "flight",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "Madrid",
+                        "to": "Copenhagen",
+                        "date": "Mar 23, 2020",
+                        "arc":0.05
+                    },
+                    {
+                        "type": "ship",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "Copenhagen",
+                        "to": "Stockholm",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    }
+                ]
+            },
+            {
+                "travel_id":1,
+                "travel_name":"Viaje a Marruecos",
+                "jumps":[
+                    {
+                        "type": "flight",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja",
+                            "Paola Peinado"
+                        ],
+                        "from": "Madrid",
+                        "to": "Marrakesh",
+                        "date": "Mar 23, 2020",
+                        "arc":0.05
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja",
+                            "Paola Peinado"
+                        ],
+                        "from": "Marrakesh",
+                        "to": "Merzouga",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    }
+                ]
+            }
+        ]
+}
