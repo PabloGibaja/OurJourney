@@ -89,6 +89,8 @@ function init(){
      generateEarth();
      generateCitiesFromFile()
      generateTravelsFromFile()
+     console.log(scene.children)
+
 }
 
 /* Restore default colors for meshes not on focus*/
@@ -97,7 +99,7 @@ function restoreColors(){
     if(scene.children[i].type === "city"){
       scene.children[i].material.color.set(cityColor)
     }
-    if(scene.children[i].type === "travel"){
+    if(scene.children[i].parent_type === "travel"){
       scene.children[i].material.color.set(travelColor)
     }
   }
@@ -136,7 +138,6 @@ function generateEarth(){
 }
 
 
-
 // to use the new travelsCollection model
 function generateJump(jumpFromFile){
   fromCoordinates = getCoordinatesFromCityName(jumpFromFile.from) 
@@ -153,12 +154,13 @@ function generateJump(jumpFromFile){
         p.multiplyScalar(1 + arc*Math.sin(Math.PI*i/20))
         points.push(p)
     }
-    console.log(points)
     let path = new THREE.CatmullRomCurve3(points) //all points that form the arc curve
     geometry = new THREE.TubeGeometry( path, 20, 0.001, 8, false );
     //geometry.setDrawRange(drawRange,drawRange+10)
     material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+    
     jump = new THREE.Mesh( geometry, material );
+    jump.parent_type = "travel"
     jump.type = jumpFromFile.type //flight | car ...
     scene.add(jump)
 
@@ -232,14 +234,8 @@ function generateCitiesFromFile (){
 }
 
 function generateTravelsFromFile(){
-   /* travels_array = travels_json.travels
-    for (var i=0; i<travels_array.length; i++){
-        console.log("Travels generated for : "+travels_array[i].person_name)
-        generateTravel(travels_array[i])
-    } */
     for (let i=0; i<travels_json.travels.length;i++){
-      console.log("Travel found: "+travels_json.travels[i].travel_name)
-      for(let j=0;travels_json.travels[i].jumps.length;j++){
+      for(let j=0;j<travels_json.travels[i].jumps.length;j++){
         console.log("Jump found: "+travels_json.travels[i].jumps[j].from+"<->"+travels_json.travels[i].jumps[j].to)
         generateJump(travels_json.travels[i].jumps[j])
       }
@@ -269,7 +265,7 @@ function onDocumentMouseMove(event)
 	var intersects = raycaster.intersectObjects( scene.children );
 
   for(let i = 0; i<intersects.length ; i++){
-    if (clicked.value!=1 && (intersects[i].object.type === "travel" || intersects[i].object.type === "city")){  //if focus is on travel
+    if (clicked.value!=1 && (intersects[i].object.parent_type === "travel" || intersects[i].object.type === "city")){  //if focus is on travel
       intersects[i].object.material.color.set( focusedColor );
       break
     }
@@ -291,7 +287,7 @@ function onDocumentMouseDown(event)
 	// calculate objects intersecting the picking ray
 	var intersects = raycaster.intersectObjects( scene.children );
   for(let i = 0; i<intersects.length ; i++){
-    if (intersects[i].object.type === "travel" || intersects[i].object.type === "city"){ 
+    if (intersects[i].object.parent_type === "travel" || intersects[i].object.type === "city"){ 
       clicked.value=1
       clicked.x=mouse.x
       clicked.y=mouse.y

@@ -13,7 +13,7 @@
                         "from": "Madrid",
                         "to": "Copenhagen",
                         "date": "Mar 23, 2020",
-                        "arc":0.01
+                        "arc":0.05
                     },
                     {
                         "type": "ship",
@@ -42,7 +42,7 @@
                         "from": "Madrid",
                         "to": "Marrakesh",
                         "date": "Mar 23, 2020",
-                        "arc":0.01
+                        "arc":0.05
                     },
                     {
                         "type": "car",
