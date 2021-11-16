@@ -261,9 +261,9 @@ function onWindowResize(){
 
 
 
-
-function setTextOverFocusedItem(mesh){
-  const geometry = new TextGeometry( 'Hello three.js!', {
+// Take mesh position and calculate a little over it, then put the text 
+function setTextOverFocusedItem(meshPoint){
+  /*const geometry = new TextGeometry( 'Hello three.js!', {
 		font: font,
 		size: 80,
 		height: 5,
@@ -273,7 +273,12 @@ function setTextOverFocusedItem(mesh){
 		bevelSize: 8,
 		bevelOffset: 0,
 		bevelSegments: 5
-	} )
+	} )*/s
+}
+
+//if not on focus, destroy mesh from scene
+function destroyText(meshText){
+
 }
 
 function onDocumentMouseMove(event)
