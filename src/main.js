@@ -13,7 +13,6 @@ clicked.value = 0
 
 let cities_json = loadJSON('./src/files/cities.json');
 let people_json =  loadJSON('./src/files/people.json');
-//let travels_json = loadJSON('./src/files/travels.json');
 let travels_json = loadJSON('./src/files/travelsCollection.json');
 
 // Load JSON text from server hosted file and return JSON parsed object
@@ -89,7 +88,7 @@ function init(){
      generateEarth();
      generateCitiesFromFile()
      generateTravelsFromFile()
-     console.log(scene.children)
+     //console.log(scene.children)
 
 }
 
@@ -160,14 +159,15 @@ function generateJump(jumpFromFile){
     material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
     
     jump = new THREE.Mesh( geometry, material );
+    jump.name = jumpFromFile.from+' -> '+jumpFromFile.to
     jump.parent_type = "travel"
     jump.type = jumpFromFile.type //flight | car ...
     scene.add(jump)
 
 }
 
-/* Receives point1 and point2 in latitude,longitude format, and the arc of the curve*/ 
-function generateTravel(travelFromFile){
+/* DEPRECATED - Receives point1 and point2 in latitude,longitude format, and the arc of the curve*/ 
+/*function generateTravel(travelFromFile){
     p1 = travelFromFile.from //origin 
     p2 = travelFromFile.to //destination
     arc = travelFromFile.arc
@@ -192,6 +192,7 @@ function generateTravel(travelFromFile){
     travel.type = "travel"
     scene.add( travel ); 
 }
+*/
 
 /* Receives lat, long of city and generate the city in the globe */
 function generateCity(cityFromFile){
@@ -235,8 +236,9 @@ function generateCitiesFromFile (){
 
 function generateTravelsFromFile(){
     for (let i=0; i<travels_json.travels.length;i++){
+      console.log("Travel found: "+travels_json.travels[i].travel_name)
       for(let j=0;j<travels_json.travels[i].jumps.length;j++){
-        console.log("Jump found: "+travels_json.travels[i].jumps[j].from+"<->"+travels_json.travels[i].jumps[j].to)
+        console.log("Jump found: "+travels_json.travels[i].jumps[j].from+" -> "+travels_json.travels[i].jumps[j].to+" ("+travels_json.travels[i].jumps[j].type+")")
         generateJump(travels_json.travels[i].jumps[j])
       }
     }
@@ -257,6 +259,23 @@ function onWindowResize(){
     renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
+
+
+
+function setTextOverFocusedItem(mesh){
+  const geometry = new TextGeometry( 'Hello three.js!', {
+		font: font,
+		size: 80,
+		height: 5,
+		curveSegments: 12,
+		bevelEnabled: true,
+		bevelThickness: 10,
+		bevelSize: 8,
+		bevelOffset: 0,
+		bevelSegments: 5
+	} )
+}
+
 function onDocumentMouseMove(event)
 {
 	mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -265,11 +284,11 @@ function onDocumentMouseMove(event)
 	var intersects = raycaster.intersectObjects( scene.children );
 
   for(let i = 0; i<intersects.length ; i++){
-    if (clicked.value!=1 && (intersects[i].object.parent_type === "travel" || intersects[i].object.type === "city")){  //if focus is on travel
+    if (clicked.value!=1 && (intersects[i].object.parent_type === "travel" || intersects[i].object.type === "city")){  //if focus is on travel or city 
       intersects[i].object.material.color.set( focusedColor );
       break
     }
-    else{
+    else{ //focus is somewhere else
       if (clicked.value===0 ){
         restoreColors()
       }
@@ -287,7 +306,7 @@ function onDocumentMouseDown(event)
 	// calculate objects intersecting the picking ray
 	var intersects = raycaster.intersectObjects( scene.children );
   for(let i = 0; i<intersects.length ; i++){
-    if (intersects[i].object.parent_type === "travel" || intersects[i].object.type === "city"){ 
+    if (intersects[i].object.parent_type === "travel" || intersects[i].object.type === "city"){  // Some mesh is clicked
       clicked.value=1
       clicked.x=mouse.x
       clicked.y=mouse.y
@@ -295,7 +314,7 @@ function onDocumentMouseDown(event)
       rotation = 0
       break
     }
-    else{
+    else{ //something else is clicked, not city not travel
       clicked.value=0
       clicked.x=mouse.x
       clicked.y=mouse.y
@@ -305,6 +324,7 @@ function onDocumentMouseDown(event)
   }
   
 }
+
 
 document.addEventListener('mousedown', onDocumentMouseDown, false);
 document.addEventListener('mousemove', onDocumentMouseMove, false);
