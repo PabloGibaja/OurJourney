@@ -8,6 +8,8 @@ var focusedColor = 0xff0000
 var rotation = 0.0002
 var clicked = new Object
 clicked.value = 0 
+drawCount = 0;
+maxDrawCount = 1000 //almacena el maximo valor al que puede llegar un drawCount de tipo travel 
 
 //drawRange = 1
 
@@ -88,7 +90,7 @@ function init(){
      generateEarth();
      generateCitiesFromFile()
      generateTravelsFromFile()
-     //console.log(scene.children)
+     console.log(scene.children)
 
 }
 
@@ -109,7 +111,18 @@ function animate() {
     requestAnimationFrame(animate);
     scene.rotation.x += 0.000;
     scene.rotation.y += rotation;
-    //drawRange+=1
+    //animate travel lines 
+    drawCount+=5
+    if (drawCount>maxDrawCount){
+      drawCount=0
+    }
+    for (let i=0; i < scene.children.length ; i++){
+      //console.log(scene.children[i])
+      if (scene.children[i].parent_type === "travel"){
+        scene.children[i].geometry.setDrawRange(drawCount-1000, drawCount+20)
+      }
+    }
+    
     //mesh.geometry.setDrawRange( drawRange-20, drawRange );
     render();
 }
@@ -154,8 +167,8 @@ function generateJump(jumpFromFile){
         points.push(p)
     }
     let path = new THREE.CatmullRomCurve3(points) //all points that form the arc curve
-    geometry = new THREE.TubeGeometry( path, 20, 0.001, 8, false );
-    //geometry.setDrawRange(drawRange,drawRange+10)
+    geometry = new THREE.TubeGeometry( path, 20, 0.001, 8, false ); 
+    geometry.setDrawRange( 0, drawCount );
     material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
     
     jump = new THREE.Mesh( geometry, material );

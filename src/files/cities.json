@@ -124,6 +124,22 @@
         {
             "size": 1.0,
             "country": "Finland",
+            "name": "Porvoo",
+            "continent":"Europe",
+            "lat": "60.392837",
+            "lng": " 25.664568"
+        },
+        {
+            "size": 1.0,
+            "country": "Russia",
+            "name": "San Petersbourg",
+            "continent":"Europe",
+            "lat": "59.937500",
+            "lng": "30.308611"
+        },
+        {
+            "size": 1.0,
+            "country": "Finland",
             "name": "Helsinki",
             "continent":"Europe",
             "lat": "60.192059",

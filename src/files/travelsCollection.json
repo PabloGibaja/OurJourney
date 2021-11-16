@@ -25,6 +25,72 @@
                         "to": "Stockholm",
                         "date": "Mar 23, 2020",
                         "arc":0.01
+                    },
+                    {
+                        "type": "ship",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "Stockholm",
+                        "to": "Riga",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "ship",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "Riga",
+                        "to": "San Petersbourg",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "ship",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "San Petersbourg",
+                        "to": "Helsinki",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "Helsinki",
+                        "to": "Porvoo",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "Porvoo",
+                        "to": "Helsinki",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "flight",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "Helsinki",
+                        "to": "Madrid",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
                     }
                 ]
             },
@@ -55,7 +121,62 @@
                         "to": "Merzouga",
                         "date": "Mar 23, 2020",
                         "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja",
+                            "Paola Peinado"
+                        ],
+                        "from": "Merzouga",
+                        "to": "Marrakesh",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja",
+                            "Paola Peinado"
+                        ],
+                        "from": "Marrakesh",
+                        "to": "Madrid",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
                     }
+
+                ]
+            },
+            {
+                "travel_id":2,
+                "travel_name":"Viaje a Nueva York",
+                "jumps":[
+                    {
+                        "type": "flight",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "Madrid",
+                        "to": "New York",
+                        "date": "Mar 23, 2020",
+                        "arc":0.05
+                    },
+                    {
+                        "type": "flight",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja",
+                            "Paola Peinado"
+                        ],
+                        "from": "New York",
+                        "to": "Madrid",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    }
+                    
                 ]
             }
         ]
