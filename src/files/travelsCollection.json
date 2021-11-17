@@ -178,6 +178,84 @@
                     }
                     
                 ]
+            },
+            {
+                "travel_id":3,
+                "travel_name":"Viaje a Tailandia",
+                "jumps":[
+                    {
+                        "type": "flight",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "Madrid",
+                        "to": "Dubai",
+                        "date": "Mar 23, 2020",
+                        "arc":0.05
+                    },
+                    {
+                        "type": "flight",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "Dubai",
+                        "to": "Bangkok",
+                        "date": "Mar 23, 2020",
+                        "arc":0.05
+                    }
+                ]
+            },
+            {
+                "travel_id":4,
+                "travel_name":"Viaje a Tailandia",
+                "jumps":[
+                    {
+                        "type": "flight",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "Madrid",
+                        "to": "Barcelona",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "flight",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "Barcelona",
+                        "to": "Viena",
+                        "date": "Mar 23, 2020",
+                        "arc":0.03
+                    },
+                    {
+                        "type": "flight",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "Viena",
+                        "to": "Bratislava",
+                        "date": "Mar 23, 2020",
+                        "arc":0.04
+                    },
+                    {
+                        "type": "flight",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "Bratislava",
+                        "to": "Madrid",
+                        "date": "Mar 23, 2020",
+                        "arc":0.04
+                    }
+                ]
             }
         ]
 }

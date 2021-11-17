@@ -5,11 +5,12 @@ var originalColor
 var travelColor = 0x00ff00
 var cityColor = 0xffffff
 var focusedColor = 0xff0000
-var rotation = 0.0002
+var rotation = 0.0005
 var clicked = new Object
 clicked.value = 0 
 drawCount = 0;
 maxDrawCount = 1000 //almacena el maximo valor al que puede llegar un drawCount de tipo travel 
+var control
 
 //drawRange = 1
 
@@ -86,12 +87,31 @@ function init(){
     raycaster = new THREE.Raycaster();
 	  mouse = new THREE.Vector2(1,1);
 
+    /* DAT GUI */
+    control = new function() {
+      this.autoRotate = true
+      this.rotationSpeed = 0.001;
+      this.enableTravelAnimation = true
+    };
+    addControls(control);
+
      /* MAIN FLOW */ 
      generateEarth();
      generateCitiesFromFile()
      generateTravelsFromFile()
      console.log(scene.children)
+     
+     //setTextOverFocusedItem()
 
+}
+
+
+function addControls(controlObject) {
+  var gui = new dat.GUI();
+  gui.add(controlObject, 'autoRotate',true,false)
+  gui.add(controlObject, 'rotationSpeed', 0, 0.02);
+  gui.add(controlObject, 'enableTravelAnimation',true,false)
+  
 }
 
 /* Restore default colors for meshes not on focus*/
@@ -106,24 +126,48 @@ function restoreColors(){
   }
 }
 
-/*TODO rotate everything when user is not in control*/
-function animate() {
-    requestAnimationFrame(animate);
-    scene.rotation.x += 0.000;
-    scene.rotation.y += rotation;
-    //animate travel lines 
-    drawCount+=5
-    if (drawCount>maxDrawCount){
-      drawCount=0
+function animateTravels(){
+  drawCount+=5
+  if (drawCount>maxDrawCount){
+    drawCount=0
+  }
+  for (let i=0; i < scene.children.length ; i++){
+    //console.log(scene.children[i])
+    if (scene.children[i].parent_type === "travel"){
+      scene.children[i].geometry.setDrawRange(drawCount-1000, drawCount+20)
     }
+  }
+}
+
+function inanimateTravels(){
     for (let i=0; i < scene.children.length ; i++){
       //console.log(scene.children[i])
       if (scene.children[i].parent_type === "travel"){
-        scene.children[i].geometry.setDrawRange(drawCount-1000, drawCount+20)
+        scene.children[i].geometry.setDrawRange(0, maxDrawCount)
       }
     }
+  }
+
+/*TODO rotate everything when user is not in control*/
+function animate() {
+    requestAnimationFrame(animate);
+
+    /* +++--- CONTROLS ---+++ */
+
+    /*Rotation*/
+    if (!control.autoRotate){
+      scene.rotation.y=0
+      camera.lookAt(0,0,0) // look at origin
+    }
+    scene.rotation.y+= control.rotationSpeed; 
     
-    //mesh.geometry.setDrawRange( drawRange-20, drawRange );
+    /*Travel animations*/
+    if(!control.enableTravelAnimation){
+      inanimateTravels()
+    }else{animateTravels()}
+
+    /* +++--- CONTROLS ---+++ */
+    
     render();
 }
 
@@ -178,34 +222,6 @@ function generateJump(jumpFromFile){
     scene.add(jump)
 
 }
-
-/* DEPRECATED - Receives point1 and point2 in latitude,longitude format, and the arc of the curve*/ 
-/*function generateTravel(travelFromFile){
-    p1 = travelFromFile.from //origin 
-    p2 = travelFromFile.to //destination
-    arc = travelFromFile.arc
-    travelType = travelFromFile.type  //flight | car | ship | train
-    from = getCoordinatesFromLatLng(p1.lat,p1.lng,radiusEarth)
-    to = getCoordinatesFromLatLng(p2.lat,p2.lng,radiusEarth)
-    v1 = new THREE.Vector3(from.x,from.y,from.z)
-    v2 = new THREE.Vector3(to.x,to.y,to.z)
-    points = []
-    for (let i=0; i<=20 ; i++){
-        let p = new THREE.Vector3().lerpVectors(v1,v2,i/20)
-        p.normalize()
-        p.multiplyScalar(1 + arc*Math.sin(Math.PI*i/20))
-        points.push(p)
-    }
-    let path = new THREE.CatmullRomCurve3(points) //all points that form the arc curve
-    geometry = new THREE.TubeGeometry( path, 20, 0.001, 8, false );
-    //geometry.setDrawRange(drawRange,drawRange+10)
-    material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-    travel = new THREE.Mesh( geometry, material );
-    travel.name = travelType+": "+p1.city+"-"+p2.city
-    travel.type = "travel"
-    scene.add( travel ); 
-}
-*/
 
 /* Receives lat, long of city and generate the city in the globe */
 function generateCity(cityFromFile){
@@ -275,8 +291,12 @@ function onWindowResize(){
 
 
 // Take mesh position and calculate a little over it, then put the text 
-function setTextOverFocusedItem(meshPoint){
-  /*const geometry = new TextGeometry( 'Hello three.js!', {
+function setTextOverFocusedItem(){
+  const loader = new THREE.FontLoader();
+
+  loader.load( 'fonts/helvetiker_regular.typeface.json', function ( font ) {
+
+	const geometry = new TextGeometry( 'Hello three.js!', {
 		font: font,
 		size: 80,
 		height: 5,
@@ -286,7 +306,13 @@ function setTextOverFocusedItem(meshPoint){
 		bevelSize: 8,
 		bevelOffset: 0,
 		bevelSegments: 5
-	} )*/s
+	} );
+} );
+  const material = new THREE.MeshPhongMaterial( { color: 0xffffff} )
+  text = new THREE.mesh(geometry,material)
+  text.position.x = 1 
+  text.position.y = 1 
+  text.position.z = 1 
 }
 
 //if not on focus, destroy mesh from scene
@@ -336,7 +362,7 @@ function onDocumentMouseDown(event)
       clicked.value=0
       clicked.x=mouse.x
       clicked.y=mouse.y
-      rotation = 0.0002
+      rotation = 0.0007
       restoreColors()
     }
   }
