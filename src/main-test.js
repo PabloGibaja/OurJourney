@@ -11,7 +11,7 @@ clicked.value = 0
 drawCount = 0;
 maxDrawCount = 1000 //almacena el maximo valor al que puede llegar un drawCount de tipo travel 
 var control
-let firstLoad=true
+typeface = 'https://cdn.rawgit.com/redwavedesign/ccb20f24e7399f3d741e49fbe23add84/raw/402bcf913c55ad6b12ecfdd20c52e3047ff26ace/bebas_regular.typeface.js';
 
 //drawRange = 1
 
@@ -60,12 +60,8 @@ function init(){
         0.1,  //near plane distance
         1000, //far clipping distance
     );
-    //camera.position.x = 1.8; // over europe
-    //camera.position.y = 1.2;
-    
     camera.position.x = 1.8; // over europe
     camera.position.y = 1.2;
-
     camera.lookAt(0,0,0) // look at origin
 
     /* LIGHT */
@@ -81,8 +77,8 @@ function init(){
     /* CONTROLS */ 
     var controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enablePan = false;
-    controls.minDistance = 1.15;
-    controls.maxDistance = 5;
+    controls.minDistance = 0;
+    controls.maxDistance = 500;
     
     /* AXES */ 
     const axesHelper = new THREE.AxesHelper( 5 );
@@ -91,31 +87,38 @@ function init(){
 
     /* RAYCASTER */
     raycaster = new THREE.Raycaster();
-	  mouse = new THREE.Vector2(1,1);
+	mouse = new THREE.Vector2(1,1);
 
     /* DAT GUI */
     control = new function() {
-      this.autoRotate = false
+      this.autoRotate = true
       this.rotationSpeed = 0.001;
       this.enableTravelAnimation = true
-      this.showCityNames = true
     };
+    addControls(control);
 
-
-
-    
      /* MAIN FLOW */ 
-     addControls(control);
-     generateEarth();
-     //createMoon();
-     stars()
-     generateCitiesFromFile()
-     generateTravelsFromFile()
+     //generateEarth();
+     generateText()
+     //generateCitiesFromFile()
      console.log(scene.children)
      
      //setTextOverFocusedItem()
 
 }
+
+function generateText(){
+  var loader = new THREE.FontLoader();
+  var font = loader.load( './src/fonts/helvetiker.typeface.json', function(font) 
+  {
+	var logo = new THREE.TextGeometry( 'MADRID', {font: font, size: 1, height: 0.01}); 
+	var material = new THREE.MeshPhongMaterial({color:0xFF0033});
+	var mesh = new THREE.Mesh(logo, material);
+	mesh.position.z = 10;
+	scene.add(mesh);
+  });
+}
+
 
 function stars(){
    r = 0.1 
@@ -177,30 +180,12 @@ function stars(){
 				}
 }
 
-function createMoon(){
-      //var material = new THREE.MeshBasicMaterial({color:0x0000ff,wireframe:true});
-      const loader = new THREE.TextureLoader();
-      const material = new THREE.MeshPhongMaterial({
-          map: loader.load('./assets/luna.jpg'),
-        });    
-      geometry = new THREE.SphereGeometry(0.27*radiusEarth, 128, 128); //size
-      sphere = new THREE.Mesh (geometry, material);
-      sphere.position.x = 1
-      sphere.position.y = 1
-      sphere.name = "moon"
-      scene.add(sphere); 
-      console.log('Moon globe generated at x: '+ sphere.position.x+' y: '+sphere.position.y+' z: '+sphere.position.z)
-}
-
 
 function addControls(controlObject) {
   var gui = new dat.GUI();
   gui.add(controlObject, 'autoRotate',true,false)
   gui.add(controlObject, 'rotationSpeed', 0, 0.02);
-  gui.add(controlObject, 'enableTravelAnimation',true,false)
-  gui.add(controlObject, 'showCityNames',true,false)
-  
-  
+  gui.add(controlObject, 'enableTravelAnimation',true,false) 
 }
 
 /* Restore default colors for meshes not on focus*/
@@ -237,27 +222,9 @@ function inanimateTravels(){
     }
   }
 
-function showCityNames(){
-  for (let i=0; i < scene.children.length ; i++){
-    //console.log(scene.children[i])
-    if (scene.children[i].type === "city_name"){
-      scene.children[i].visible=true
-    }
-  }
-}
-
-function hideCityNames(){
-  for (let i=0; i < scene.children.length ; i++){
-    //console.log(scene.children[i])
-    if (scene.children[i].type === "city_name"){
-      scene.children[i].visible=false
-    }
-  }
-}
-
 /*TODO rotate everything when user is not in control*/
 function animate() {
-    requestAnimationFrame(animate);  
+    requestAnimationFrame(animate);
 
     //rotate moon  
     /*while (camera.position.x >= 1.2 && camera.position.y >= 1.8) {
@@ -281,12 +248,8 @@ function animate() {
       inanimateTravels()
     }else{animateTravels()}
 
-    /*Show city names*/
-    if(control.showCityNames){
-      showCityNames()
-    }else{hideCityNames()}
-
     /* +++--- CONTROLS ---+++ */
+    
     render();
 }
 
@@ -342,33 +305,14 @@ function generateJump(jumpFromFile){
 }
 
 
-function generateCityName(city,name, x, y, z){
-  var loader = new THREE.FontLoader();
-  var font = loader.load( './src/fonts/helvetiker.typeface.json', function(font) 
-  {
-	var geometry = new THREE.TextGeometry(name, {font: font, size: 0.005, height: 0.0001}); 
-  geometry.center();
-	var material = new THREE.MeshPhongMaterial({color:0xF2F2F2});
-	var mesh = new THREE.Mesh(geometry, material);
-  mesh.name="text of: "+name
-  mesh.type = "city_name"
-	mesh.position.x = 1.005*x;
-  mesh.position.y = 1.005*y;
-  mesh.position.z = 1.005*z;
-  mesh.lookAt(1.5*x,1.5*y,1.5*z);
-	scene.add(mesh);
-  });
-}
-
-
 /* Receives lat, long of city and generate the city in the globe */
 function generateCity(cityFromFile){
     lat = cityFromFile.lat
     long = cityFromFile.lng
     size = cityFromFile.size
     let city = new THREE.Mesh(
-        new THREE.SphereBufferGeometry(size*0.001,20,20),
-        new THREE.MeshBasicMaterial({color:000000})
+        new THREE.SphereBufferGeometry(size*0.002,20,20),
+        new THREE.MeshBasicMaterial({color:0xffffff})
     );
     pos = getCoordinatesFromLatLng(lat,long,radiusEarth) 
     city.position.set(pos.x,pos.y,pos.z)
@@ -377,7 +321,6 @@ function generateCity(cityFromFile){
     city.continent = cityFromFile.continent
     city.type = "city"
     scene.add(city)
-    generateCityName(city,cityFromFile.name, pos.x, pos.y, pos.z)
     console.log('x: '+ city.position.x+' y: '+city.position.y+' z: '+city.position.z)
 }
 

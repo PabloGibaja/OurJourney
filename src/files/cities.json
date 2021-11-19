@@ -83,14 +83,6 @@
         },
         {
             "size": 1.0,
-            "country": "Vatican",
-            "name": "Vatican",
-            "continent":"Europe",
-            "lat": "41.904755",
-            "lng": "12.454628"
-        },
-        {
-            "size": 1.0,
             "country": "Andorra",
             "name": "Andorra La Vella",
             "continent":"Europe",
