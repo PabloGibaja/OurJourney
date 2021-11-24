@@ -20,9 +20,31 @@
         <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
         <script src="https://threejs.org/examples/js/geometries/TextGeometry.js"></script>
         <script src="https://threejs.org/examples/js/loaders/FontLoader.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/gsap@3.3.4/dist/gsap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>
-        
+        <script id="vertexShader" type="x-shader/x-vertex">
+            void main()
+		{
+			gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+		}
+        </script>
+        <script id="fragmentShader" type="x-shader/x-fragment">
+            #ifdef GL_ES
+            precision mediump float;
+            #endif
+
+            uniform vec2 u_resolution;
+            uniform float u_time;
+
+            void main() {
+                vec2 st = gl_FragCoord.xy/u_resolution.xy;
+                st.x *= u_resolution.x/u_resolution.y;
+
+                vec3 color = vec3(0.);
+                color = vec3(st.x,st.y,abs(sin(u_time)));
+
+                gl_FragColor = vec4(color,0.816);
+            }
+        </script>
         <script src="./src/main.js"></script>
     </body>
 </html>

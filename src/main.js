@@ -101,6 +101,9 @@ function init(){
       this.showCityNames = true
     };
 
+    /* CLOCK*/
+    clock = new THREE.Clock();
+
 
 
     
@@ -216,14 +219,16 @@ function restoreColors(){
 }
 
 function animateTravels(){
-  drawCount+=5
-  if (drawCount>maxDrawCount){
-    drawCount=0
-  }
+  
   for (let i=0; i < scene.children.length ; i++){
     //console.log(scene.children[i])
     if (scene.children[i].parent_type === "travel"){
-      scene.children[i].geometry.setDrawRange(drawCount-1000, drawCount+20)
+      scene.children[i].material.uniforms.u_time.value += clock.getDelta();
+      // scene.children[i].geometry.setDrawRange(drawCount-1000, drawCount+100)
+      // drawCount+=1
+      // if (drawCount>maxDrawCount+3000){
+      //   drawCount=0
+      // }
     }
   }
 }
@@ -330,8 +335,17 @@ function generateJump(jumpFromFile){
     }
     let path = new THREE.CatmullRomCurve3(points) //all points that form the arc curve
     geometry = new THREE.TubeGeometry( path, 20, 0.001, 8, false ); 
-    geometry.setDrawRange( 0, drawCount );
-    material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+    //geometry.setDrawRange( 0, 1 );
+    var uniforms = {
+      u_time: { type: "f", value: 0 },
+      u_resolution: { type: "v2", value: new THREE.Vector3() },
+      u_mouse: { type: "v2", value: new THREE.Vector3() }
+  };
+    var material = new THREE.ShaderMaterial( {
+      uniforms: uniforms,
+      vertexShader: document.getElementById( 'vertexShader' ).textContent,
+      fragmentShader: document.getElementById( 'fragmentShader' ).textContent
+  } );
     
     jump = new THREE.Mesh( geometry, material );
     jump.name = jumpFromFile.from+' -> '+jumpFromFile.to
