@@ -1,5 +1,5 @@
 let scene, camera, renderer;
-let earth, pointLight
+let earth, pointLight,cloudMesh
 angle=0
 radiusEarth=1
 var focusedItem
@@ -146,7 +146,7 @@ function init(){
 
     /* DAT GUI */
     control = new function() {
-      this.autoRotate = false
+      this.autoRotate = true
       this.rotationSpeed = 0.001;
       this.enableTravelAnimation = true
       this.showCityNames = true
@@ -158,6 +158,7 @@ function init(){
      /* MAIN FLOW */ 
      addControls(control);
      generateEarth();
+     generateAtmosphere()
     //  createMoon();
      stars()
      generateCitiesFromFile()
@@ -305,12 +306,14 @@ function hideCityNames(){
 /*TODO rotate everything when user is not in control*/
 function animate() {
     requestAnimationFrame(animate); 
-    
+    cloudMesh.rotation.y += 0.0002*Math.random()
    // FALTA ROTAR LA POINTLIGHT ALREDEDOR DEL EJE Y 
     
     /*Rotation*/
     if (control.autoRotate){
       scene.rotation.y+= control.rotationSpeed; 
+      
+      //cloudMesh.rotation.x += 0.01*Math.random()
       camera.lookAt(0,0,0) // look at origin
     }else{
       scene.rotation.y=0
@@ -337,6 +340,22 @@ function render()
 	renderer.render(scene, camera);
 }
 
+function generateAtmosphere(){
+  /*ATMOSPHERE*/
+  const loader = new THREE.TextureLoader();
+  atm_geometry   = new THREE.SphereGeometry(1.005*radiusEarth, 128, 128)
+  atm_material  = new THREE.MeshPhongMaterial({
+    map     : loader.load('./assets/clouds.png'),
+    side        : THREE.DoubleSide,
+    opacity     : 0.6,
+    transparent : true,
+    depthWrite  : false,
+  })
+  cloudMesh = new THREE.Mesh(atm_geometry, atm_material)
+  scene.add(cloudMesh)
+}
+
+
 /* Generate Earth globe in origin*/
 function generateEarth(){
     //var material = new THREE.MeshBasicMaterial({color:0x0000ff,wireframe:true});
@@ -355,18 +374,7 @@ function generateEarth(){
     earth.name = "earth"
     scene.add(earth); 
 
-    /*ATMOSPHERE*/
-    //  var atm_geometry   = new THREE.SphereGeometry(1.005*radiusEarth, 128, 128)
-    //  var atm_material  = new THREE.MeshPhongMaterial({
-    //    map     : loader.load('./assets/clouds.jpg'),
-    //    side        : THREE.DoubleSide,
-    //    opacity     : 0.01,
-    //    transparent : true,
-    //    depthWrite  : false,
-    //  })
-    //  var cloudMesh = new THREE.Mesh(atm_geometry, atm_material)
-    //  cloudMesh.rotation.y += control.rotationSpeed
-    //  scene.add(cloudMesh)
+    
 
 
     //console.log('Earth globe generated at x: '+ sphere.position.x+' y: '+sphere.position.y+' z: '+sphere.position.z)
