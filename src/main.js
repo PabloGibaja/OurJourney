@@ -1,4 +1,6 @@
 let scene, camera, renderer;
+let earth, pointLight
+angle=0
 radiusEarth=1
 var focusedItem
 var originalColor
@@ -101,8 +103,6 @@ function init(){
         0.1,  //near plane distance
         1000, //far clipping distance
     );
-    //camera.position.x = 1.8; // over europe
-    //camera.position.y = 1.2;
     
     camera.position.x = 1.8; // over europe
     camera.position.y = 1.2;
@@ -110,8 +110,18 @@ function init(){
     camera.lookAt(0,0,0) // look at origin
 
     /* LIGHT */
-    const light = new THREE.AmbientLight( 0xfffff0 ); // soft white light
-    scene.add( light );
+     const ambientlight = new THREE.AmbientLight(0xffffff, 0.8);
+       scene.add(ambientlight);
+     pointLight = new THREE.PointLight(0xf0f0f0, 0.5);
+     pointLight.castShadow = true;
+     pointLight.shadowCameraVisible = true;
+     pointLight.shadowBias = 0.00001;
+     pointLight.shadowDarkness = 0.2;
+     pointLight.shadowMapWidth = 2048;
+     pointLight.shadowMapHeight = 2048;
+     pointLight.position.set(18, 20, 0);
+    scene.add(pointLight);
+  
 
     /* RENDER */ 
     renderer = new THREE.WebGLRenderer({antialias:true});   
@@ -128,7 +138,7 @@ function init(){
     /* AXES */ 
     const axesHelper = new THREE.AxesHelper( 5 );
     axesHelper.setColors ( 0xff0000, 0x00ff00, 0x0000ff )
-    //scene.add( axesHelper );
+    scene.add( axesHelper );
 
     /* RAYCASTER */
     raycaster = new THREE.Raycaster();
@@ -136,7 +146,7 @@ function init(){
 
     /* DAT GUI */
     control = new function() {
-      this.autoRotate = true
+      this.autoRotate = false
       this.rotationSpeed = 0.001;
       this.enableTravelAnimation = true
       this.showCityNames = true
@@ -148,11 +158,11 @@ function init(){
      /* MAIN FLOW */ 
      addControls(control);
      generateEarth();
-     //createMoon();
+    //  createMoon();
      stars()
      generateCitiesFromFile()
      generateTravelsFromFile()
-     //console.log(scene.children)
+     console.log(scene.children)
      
      //setTextOverFocusedItem()
 
@@ -193,9 +203,9 @@ function stars(){
 				starsGeometry[ 1 ].setAttribute( 'position', new THREE.Float32BufferAttribute( vertices2, 3 ) );
 
 				const starsMaterials = [
-					new THREE.PointsMaterial( { color: 0x555555, size: 2, sizeAttenuation: false } ),
+					new THREE.PointsMaterial( { color: 0x575757, size: 2, sizeAttenuation: false } ),
 					new THREE.PointsMaterial( { color: 0x555555, size: 1, sizeAttenuation: false } ),
-					new THREE.PointsMaterial( { color: 0x333333, size: 2, sizeAttenuation: false } ),
+					new THREE.PointsMaterial( { color: 0xf3f3f3, size: 2, sizeAttenuation: false } ),
 					new THREE.PointsMaterial( { color: 0x3a3a3a, size: 1, sizeAttenuation: false } ),
 					new THREE.PointsMaterial( { color: 0x1a1a1a, size: 2, sizeAttenuation: false } ),
 					new THREE.PointsMaterial( { color: 0x1a1a1a, size: 1, sizeAttenuation: false } )
@@ -224,13 +234,13 @@ function createMoon(){
       const material = new THREE.MeshPhongMaterial({
           map: loader.load('./assets/luna.jpg'),
         });    
-      geometry = new THREE.SphereGeometry(0.27*radiusEarth, 128, 128); //size
+      geometry = new THREE.SphereGeometry(0.2*radiusEarth, 128, 128); //size
       sphere = new THREE.Mesh (geometry, material);
-      sphere.position.x = 1
-      sphere.position.y = 1
+      sphere.position.x = -2
+      sphere.position.y = 2
       sphere.name = "moon"
       scene.add(sphere); 
-      console.log('Moon globe generated at x: '+ sphere.position.x+' y: '+sphere.position.y+' z: '+sphere.position.z)
+      // console.log('Moon globe generated at x: '+ sphere.position.x+' y: '+sphere.position.y+' z: '+sphere.position.z)
 }
 
 function addControls(controlObject) {
@@ -261,10 +271,6 @@ function animateLine(){
   for (let i=0; i < scene.children.length ; i++){
     if (scene.children[i].parent_type === "travel"){
       scene.children[i].material.transparent = true
-      if (scene.children[i].material.uniforms.dashOffset.value < -2) {
-        scene.children[i].material.uniforms.dashOffset.value = 0
-        return;
-      }
       scene.children[i].material.uniforms.dashOffset.value -= 0.005;
       }
     }
@@ -295,27 +301,21 @@ function hideCityNames(){
   }
 }
 
+
 /*TODO rotate everything when user is not in control*/
 function animate() {
-    requestAnimationFrame(animate);  
-
-    //rotate moon  
-    /*while (camera.position.x >= 1.2 && camera.position.y >= 1.8) {
-      camera.position.x -= 1;
-      camera.position.y -= 1;
-    }
-     // over europe
-    camera.lookAt(0,0,0) // look at origin
-*/
-    /* +++--- CONTROLS ---+++ */
-
-    /*Rotation*/
-    if (!control.autoRotate){
-      scene.rotation.y=0
-      camera.lookAt(0,0,0) // look at origin
-    }
-    scene.rotation.y+= control.rotationSpeed; 
+    requestAnimationFrame(animate); 
     
+   // FALTA ROTAR LA POINTLIGHT ALREDEDOR DEL EJE Y 
+    
+    /*Rotation*/
+    if (control.autoRotate){
+      scene.rotation.y+= control.rotationSpeed; 
+      camera.lookAt(0,0,0) // look at origin
+    }else{
+      scene.rotation.y=0
+    }
+       
     /*Travel animations*/
     if(!control.enableTravelAnimation){
       inanimateLine()
@@ -342,15 +342,34 @@ function generateEarth(){
     //var material = new THREE.MeshBasicMaterial({color:0x0000ff,wireframe:true});
     const loader = new THREE.TextureLoader();
     const material = new THREE.MeshPhongMaterial({
-        map: loader.load('./assets/1_earth_8k.jpg'),
+        map: loader.load('./assets/8081_earthmap10k.jpg'),
+        bumpMap: loader.load('./assets/8081_earthbump10k.jpg'),
+        bumpScale:0.08,
+        specularMap : loader.load('./assets/8081_earthspec10k.jpg'),
+        specular: new THREE.Color(0x323232)
       });    
     geometry = new THREE.SphereGeometry(radiusEarth, 128, 128); //size
-    sphere = new THREE.Mesh (geometry, material);
-    sphere.position.x = 0
-    sphere.position.y = 0
-    sphere.name = "earth"
-    scene.add(sphere); 
-    console.log('Earth globe generated at x: '+ sphere.position.x+' y: '+sphere.position.y+' z: '+sphere.position.z)
+    earth = new THREE.Mesh (geometry, material);
+    earth.position.x = 0
+    earth.position.y = 0
+    earth.name = "earth"
+    scene.add(earth); 
+
+    /*ATMOSPHERE*/
+    //  var atm_geometry   = new THREE.SphereGeometry(1.005*radiusEarth, 128, 128)
+    //  var atm_material  = new THREE.MeshPhongMaterial({
+    //    map     : loader.load('./assets/clouds.jpg'),
+    //    side        : THREE.DoubleSide,
+    //    opacity     : 0.01,
+    //    transparent : true,
+    //    depthWrite  : false,
+    //  })
+    //  var cloudMesh = new THREE.Mesh(atm_geometry, atm_material)
+    //  cloudMesh.rotation.y += control.rotationSpeed
+    //  scene.add(cloudMesh)
+
+
+    //console.log('Earth globe generated at x: '+ sphere.position.x+' y: '+sphere.position.y+' z: '+sphere.position.z)
 }
 
 
@@ -362,23 +381,29 @@ function generateJump(jumpFromFile,colour){
   to = getCoordinatesFromLatLng(toCoordinates.lat,toCoordinates.long,radiusEarth)
   v1 = new THREE.Vector3(from.x,from.y,from.z)
   v2 = new THREE.Vector3(to.x,to.y,to.z)
+  //calcular distancia entre puntos, si es muy grande, generar 20 puntos, si es pequeña generar menos puntos. Que el arco que se genera
+  //dependa de la distancia entre los puntos, a mas distancia, mas alto el arco
   arc = jumpFromFile.arc
   points = []
     for (let i=0; i<=20 ; i++){
         let p = new THREE.Vector3().lerpVectors(v1,v2,i/20)
         p.normalize()
-        p.multiplyScalar(1 + arc*Math.sin(Math.PI*i/20))
+        p.multiplyScalar(1 + 2*arc*Math.sin(Math.PI*i/20))
         points.push(p)
     }
     let path = new THREE.CatmullRomCurve3(points) //all points that form the arc curve
         
-    material = new MeshLineMaterial( { color: colour, lineWidth:0.002,transparent: true, dashArray:2, dashRatio:0.5, dashOffset: 0 } );
+    material = new MeshLineMaterial( { color: colour, lineWidth:0.0015,transparent: true, dashArray:2, dashRatio:0.6, dashOffset: 0 + Math.random()} );
     line = new MeshLine()
     line.setPoints(path.points);
+    material.needsUpdate =  true
     jump = new THREE.Mesh(line,material)
     jump.name = jumpFromFile.from+' -> '+jumpFromFile.to
     jump.parent_type = "travel"
     jump.type = jumpFromFile.type //flight | car ...
+    
+
+    //earth.add(jump)
     scene.add(jump)
 
 }
@@ -390,15 +415,15 @@ function generateCityName(city,name, x, y, z){
   {
 	var geometry = new THREE.TextGeometry(name, {font: font, size: 0.005, height: 0.0001}); 
   geometry.center();
-	var material = new THREE.MeshPhongMaterial({color:0xF2F2F2});
-	var mesh = new THREE.Mesh(geometry, material);
-  mesh.name="text of: "+name
-  mesh.type = "city_name"
-	mesh.position.x = 1.005*x;
-  mesh.position.y = 1.005*y;
-  mesh.position.z = 1.005*z;
-  mesh.lookAt(1.5*x,1.5*y,1.5*z);
-	scene.add(mesh);
+	var material = new THREE.MeshPhongMaterial({color:0xffffff});
+	var cityText = new THREE.Mesh(geometry, material);
+  cityText.name="text of: "+name
+  cityText.type = "city_name"
+	cityText.position.x = 1.005*x;
+  cityText.position.y = 1.005*y;
+  cityText.position.z = 1.005*z;
+  cityText.lookAt(1.5*x,1.5*y,1.5*z);
+	scene.add(cityText);
   });
 }
 
@@ -419,8 +444,9 @@ function generateCity(cityFromFile){
     city.continent = cityFromFile.continent
     city.type = "city"
     scene.add(city)
+    // scene.add(city)
     generateCityName(city,cityFromFile.name, pos.x, pos.y, pos.z)
-    console.log('x: '+ city.position.x+' y: '+city.position.y+' z: '+city.position.z)
+    // console.log('x: '+ city.position.x+' y: '+city.position.y+' z: '+city.position.z)
 }
 
 /* Converts lat, long coordinates to spherical coordinates */
@@ -439,7 +465,7 @@ function getCoordinatesFromLatLng(latitude, longitude, radiusEarth)
 function generateCitiesFromFile (){
    cities_array = cities_json.cities
    for (var i=0; i<cities_array.length; i++){
-       console.log(cities_array[i].name+" generated at :")
+      //  console.log(cities_array[i].name+" generated at :")
        generateCity(cities_array[i])
       // generateCityNames(cities_array[i])
    }
@@ -447,11 +473,11 @@ function generateCitiesFromFile (){
 
 function generateTravelsFromFile(){
     for (let i=0; i<travels_json.travels.length;i++){
-      console.log("Travel found: "+travels_json.travels[i].travel_name)
+      // console.log("Travel found: "+travels_json.travels[i].travel_name)
       colour = new THREE.Color();
       colour.setHex(`0x${colorsArray[Math.floor(Math.random() * colorsArray.length)]}`);
       for(let j=0;j<travels_json.travels[i].jumps.length;j++){
-        console.log("Jump found: "+travels_json.travels[i].jumps[j].from+" -> "+travels_json.travels[i].jumps[j].to+" ("+travels_json.travels[i].jumps[j].type+")")
+        // console.log("Jump found: "+travels_json.travels[i].jumps[j].from+" -> "+travels_json.travels[i].jumps[j].to+" ("+travels_json.travels[i].jumps[j].type+")")
         generateJump(travels_json.travels[i].jumps[j],colour)
       }
     }
@@ -463,7 +489,7 @@ function getCoordinatesFromCityName(name){
       return {lat: cities_json.cities[i].lat , long: cities_json.cities[i].lng}
     }
   }
-    console.log("City not found in cities list: "+name)
+    // console.log("City not found in cities list: "+name)
 }
 
 function onWindowResize(){

@@ -179,6 +179,22 @@
         },
         {
             "size": 1.0,
+            "country": "Thailand",
+            "name": "Chiang Mai",
+            "continent":"Asia",
+            "lat": "18.796143",
+            "lng": "98.979263"
+        },
+        {
+            "size": 1.0,
+            "country": "Thailand",
+            "name": "Phi Phi",
+            "continent":"Asia",
+            "lat": "7.678889",
+            "lng": "98.764999"
+        },
+        {
+            "size": 1.0,
             "country": "Turkey",
             "name": "Ankara",
             "continent":"Asia",
@@ -208,6 +224,22 @@
             "continent":"America",
             "lat": "40.730610",
             "lng": "-73.935242"
+        },
+        {
+            "size": 1.0,
+            "country": "Dominic Republic",
+            "name": "Santo Domingo",
+            "continent":"America",
+            "lat": "18.483402",
+            "lng": "-69.929611"
+        },
+        {
+            "size": 1.0,
+            "country": "Dominic Republic",
+            "name": "Punta Cana",
+            "continent":"America",
+            "lat": "18.58182",
+            "lng": "-68.40431"
         },
         {
             "size": 1.0,
