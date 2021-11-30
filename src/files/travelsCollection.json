@@ -44,6 +44,17 @@
                             "Pablo Gibaja"
                         ],
                         "from": "Riga",
+                        "to": "Tallin",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "ship",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "Tallin",
                         "to": "San Petersbourg",
                         "date": "Mar 23, 2020",
                         "arc":0.01
@@ -209,7 +220,7 @@
             },
             {
                 "travel_id":4,
-                "travel_name":"Viaje a Tailandia",
+                "travel_name":"Erasmus",
                 "jumps":[
                     {
                         "type": "flight",
@@ -251,6 +262,56 @@
                             "Pablo Gibaja"
                         ],
                         "from": "Bratislava",
+                        "to": "Madrid",
+                        "date": "Mar 23, 2020",
+                        "arc":0.04
+                    }
+                ]
+            },
+            {
+                "travel_id":4,
+                "travel_name":"Viaje a Turquia",
+                "jumps":[
+                    {
+                        "type": "flight",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "Madrid",
+                        "to": "Cappadocia",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "flight",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "Cappadocia",
+                        "to": "Ankara",
+                        "date": "Mar 23, 2020",
+                        "arc":0.03
+                    },
+                    {
+                        "type": "flight",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "Ankara",
+                        "to": "Istambul",
+                        "date": "Mar 23, 2020",
+                        "arc":0.04
+                    },
+                    {
+                        "type": "flight",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "Istambul",
                         "to": "Madrid",
                         "date": "Mar 23, 2020",
                         "arc":0.04
