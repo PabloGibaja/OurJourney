@@ -116,19 +116,19 @@ function init(){
     /* RENDER */ 
     renderer = new THREE.WebGLRenderer({antialias:true});   
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x303030);
+    //renderer.setClearColor(0x303030);
     document.body.appendChild(renderer.domElement);
 
     /* CONTROLS */ 
     var controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enablePan = false;
     controls.minDistance = 1.15;
-    controls.maxDistance = 5;
+    controls.maxDistance = 4;
     
     /* AXES */ 
     const axesHelper = new THREE.AxesHelper( 5 );
     axesHelper.setColors ( 0xff0000, 0x00ff00, 0x0000ff )
-    scene.add( axesHelper );
+    //scene.add( axesHelper );
 
     /* RAYCASTER */
     raycaster = new THREE.Raycaster();
@@ -152,7 +152,7 @@ function init(){
      stars()
      generateCitiesFromFile()
      generateTravelsFromFile()
-     console.log(scene.children)
+     //console.log(scene.children)
      
      //setTextOverFocusedItem()
 
@@ -233,7 +233,6 @@ function createMoon(){
       console.log('Moon globe generated at x: '+ sphere.position.x+' y: '+sphere.position.y+' z: '+sphere.position.z)
 }
 
-
 function addControls(controlObject) {
   var gui = new dat.GUI();
   gui.add(controlObject, 'autoRotate',true,false)
@@ -256,27 +255,27 @@ function restoreColors(){
   }
 }
 
-function animateTravels(){
-  drawCount+=0.5
-  if (drawCount>70){
-    drawCount=0
-  }
-  for (let i=0; i < scene.children.length ; i++){
-    //console.log(scene.children[i])
-    if (scene.children[i].parent_type === "travel"){
-      scene.children[i].geometry.setDrawRange(drawCount-30, drawCount+30)
-    }
-  }
-}
 
-function inanimateTravels(){
-    for (let i=0; i < scene.children.length ; i++){
-      //console.log(scene.children[i])
-      if (scene.children[i].parent_type === "travel"){
-        scene.children[i].geometry.setDrawRange(0, maxDrawCount)
+function animateLine(){
+
+  for (let i=0; i < scene.children.length ; i++){
+    if (scene.children[i].parent_type === "travel"){
+      scene.children[i].material.transparent = true
+      if (scene.children[i].material.uniforms.dashOffset.value < -2) {
+        scene.children[i].material.uniforms.dashOffset.value = 0
+        return;
+      }
+      scene.children[i].material.uniforms.dashOffset.value -= 0.005;
       }
     }
-  }
+}
+
+function inanimateLine(){
+  for (let i=0; i < scene.children.length ; i++){
+    if (scene.children[i].parent_type === "travel"){
+      scene.children[i].material.transparent = false
+    }
+}}
 
 function showCityNames(){
   for (let i=0; i < scene.children.length ; i++){
@@ -319,8 +318,10 @@ function animate() {
     
     /*Travel animations*/
     if(!control.enableTravelAnimation){
-      inanimateTravels()
-    }else{animateTravels()}
+      inanimateLine()
+    }else{
+      animateLine()
+    }
 
     /*Show city names*/
     if(control.showCityNames){
@@ -370,13 +371,11 @@ function generateJump(jumpFromFile,colour){
         points.push(p)
     }
     let path = new THREE.CatmullRomCurve3(points) //all points that form the arc curve
-    const geometry = new THREE.BufferGeometry().setFromPoints( path.points );
-    //geometry = new THREE.BufferGeometry( path, 20, 0.001, 8, false ); 
-    geometry.setDrawRange( 0, drawCount );
-    
-    material = new THREE.LineBasicMaterial( { color: colour } );
-    
-    jump = new THREE.Line( geometry, material );
+        
+    material = new MeshLineMaterial( { color: colour, lineWidth:0.002,transparent: true, dashArray:2, dashRatio:0.5, dashOffset: 0 } );
+    line = new MeshLine()
+    line.setPoints(path.points);
+    jump = new THREE.Mesh(line,material)
     jump.name = jumpFromFile.from+' -> '+jumpFromFile.to
     jump.parent_type = "travel"
     jump.type = jumpFromFile.type //flight | car ...
@@ -411,7 +410,7 @@ function generateCity(cityFromFile){
     size = cityFromFile.size
     let city = new THREE.Mesh(
         new THREE.SphereBufferGeometry(size*0.001,20,20),
-        new THREE.MeshBasicMaterial({color:000000})
+        new THREE.MeshBasicMaterial({color:0xffffff})
     );
     pos = getCoordinatesFromLatLng(lat,long,radiusEarth) 
     city.position.set(pos.x,pos.y,pos.z)
