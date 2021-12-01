@@ -179,7 +179,7 @@ function init(){
     /* AXES */ 
     const axesHelper = new THREE.AxesHelper( 5 );
     axesHelper.setColors ( 0xff0000, 0x00ff00, 0x0000ff )
-    scene.add( axesHelper );
+    //scene.add( axesHelper );
 
     /* RAYCASTER */
     raycaster = new THREE.Raycaster();
@@ -306,7 +306,7 @@ function createSun(){
       color: 0xf1f1f1
 
     });    
-  geometry = new THREE.SphereGeometry(0.01, 32, 32); //size
+  geometry = new THREE.SphereGeometry(0.001, 32, 32); //size
   sun = new THREE.Mesh (geometry, material);
   sun.position.set(0,1.2,-1)
   sun.name = "sun"
@@ -469,7 +469,7 @@ function generateEarth(){
         bumpScale:0.08,
         specularMap : loader.load('./assets/8081_earthspec10k.jpg'),
         // specular: new THREE.Color(0x424242)
-        specular: new THREE.Color(0xffffff)
+        specular: new THREE.Color(0x424242)
       });    
     geometry = new THREE.SphereGeometry(radiusEarth, 128, 128); //size
     earth = new THREE.Mesh (geometry, material);
