@@ -1,7 +1,11 @@
 let scene, camera, renderer;
-let earth, pointLight,cloudMesh
-angle=0
+let earth, pointLight,cloudMesh,dayNight,sDirection
 radiusEarth=1
+const axis = new THREE.Vector3(0, 1, 0).normalize();
+var quaternionSun = new THREE.Quaternion();
+quaternionSun.setFromAxisAngle(axis, 0.005); //axis y and velocity 
+var quaternionMoon = new THREE.Quaternion();
+quaternionMoon.setFromAxisAngle(axis, 0.001);
 var focusedItem
 var originalColor
 var travelColor = 0x00ff00
@@ -10,8 +14,6 @@ var focusedColor = 0xff0000
 var rotation = 0.0005
 var clicked = new Object
 clicked.value = 0 
-drawCount = 0;
-maxDrawCount = 1000 //almacena el maximo valor al que puede llegar un drawCount de tipo travel 
 var control
 let firstLoad=true
 let colorsArray = [
@@ -55,6 +57,50 @@ let colorsArray = [
   "88e9b8", "c2b0e2", "86e98f", "ae90e2", "1a806b", "436a9e", "0ec0ff",
   "f812b3", "b17fc9", "8d6c2f", "d3277a", "2ca1ae", "9685eb", "8a96c6",
   "dba2e6", "76fc1b", "608fa4", "20f6ba", "07d7f6", "dce77a", "77ecca"]
+
+  const vs = `
+varying vec2 vUv;
+varying vec3 vNormal;
+
+void main() {
+  vUv = uv;
+  vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+  vNormal = normalMatrix * normal;
+  gl_Position = projectionMatrix * mvPosition;
+}
+`;
+
+const fs = `
+uniform sampler2D dayTexture;
+uniform sampler2D nightTexture;
+
+uniform vec3 sunDirection;
+
+varying vec2 vUv;
+varying vec3 vNormal;
+
+void main( void ) {
+  vec3 dayColor = texture2D( dayTexture, vUv ).rgb; 
+  vec3 nightColor = texture2D( nightTexture, vUv ).rgb;
+
+  // compute cosine sun to normal so -1 is away from sun and +1 is toward sun.
+  float cosineAngleSunToNormal = dot(normalize(vNormal), sunDirection);
+
+  // sharpen the edge beween the transition
+  cosineAngleSunToNormal = clamp( cosineAngleSunToNormal * 25.0, -1.0, 1.0);
+
+  // convert to 0 to 1 for mixing
+  float mixAmount = cosineAngleSunToNormal * 0.5 + 0.5;
+
+  // Select day or night texture based on mix.
+  vec3 color = mix( nightColor, dayColor, mixAmount );
+
+  float alpha = smoothstep(0.0, 1.0, vUv.y);
+
+  gl_FragColor = vec4( color, alpha );
+}
+
+`;
 
 //drawRange = 1
 
@@ -110,18 +156,13 @@ function init(){
     camera.lookAt(0,0,0) // look at origin
 
     /* LIGHT */
-     const ambientlight = new THREE.AmbientLight(0xffffff, 0.8);
+     const ambientlight = new THREE.AmbientLight(0xffffff, 0.3);
        scene.add(ambientlight);
-     pointLight = new THREE.PointLight(0xf0f0f0, 0.5);
-     pointLight.castShadow = true;
-     pointLight.shadowCameraVisible = true;
-     pointLight.shadowBias = 0.00001;
-     pointLight.shadowDarkness = 0.2;
-     pointLight.shadowMapWidth = 2048;
-     pointLight.shadowMapHeight = 2048;
-     pointLight.position.set(18, 20, 0);
-    scene.add(pointLight);
-  
+
+      // pointLight2 = new THREE.PointLight(0xffffff, 1);
+      // pointLight2.position.set(1.8, -1.2, 0);
+      // scene.add(pointLight2);
+      
 
     /* RENDER */ 
     renderer = new THREE.WebGLRenderer({antialias:true});   
@@ -131,7 +172,7 @@ function init(){
 
     /* CONTROLS */ 
     var controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls.enablePan = false;
+    controls.enablePan = true;
     controls.minDistance = 1.15;
     controls.maxDistance = 4;
     
@@ -159,7 +200,9 @@ function init(){
      addControls(control);
      generateEarth();
      generateAtmosphere()
-    //  createMoon();
+     generateDayNight()
+     //createMoon();
+     createSun()
      stars()
      generateCitiesFromFile()
      generateTravelsFromFile()
@@ -236,12 +279,42 @@ function createMoon(){
           map: loader.load('./assets/luna.jpg'),
         });    
       geometry = new THREE.SphereGeometry(0.2*radiusEarth, 128, 128); //size
-      sphere = new THREE.Mesh (geometry, material);
-      sphere.position.x = -2
-      sphere.position.y = 2
-      sphere.name = "moon"
-      scene.add(sphere); 
+      moon = new THREE.Mesh (geometry, material);
+      //moon.position.x = -3.0
+      moon.position.set(2,0,0)
+      //moon.position.y = 0.2
+      moon.name = "moon"
+      moon.castShadow = true; //default is false
+      moon.receiveShadow = true; //default
+      
+      scene.add(moon); 
+    
       // console.log('Moon globe generated at x: '+ sphere.position.x+' y: '+sphere.position.y+' z: '+sphere.position.z)
+}
+
+function createSun(){
+  //var material = new THREE.MeshBasicMaterial({color:0x0000ff,wireframe:true});
+  // pointLight = new THREE.PointLight(0xffffff, 1);
+  // pointLight.position.set(18, 1.2, 0);
+  directionalLight1 = new THREE.DirectionalLight( 0xffffff );
+  directionalLight1.position.set(1, 0, 0).normalize();
+  scene.add( directionalLight1 );
+
+
+  const loader = new THREE.TextureLoader();
+  const material = new THREE.MeshPhongMaterial({
+      color: 0xf1f1f1
+
+    });    
+  geometry = new THREE.SphereGeometry(0.01, 32, 32); //size
+  sun = new THREE.Mesh (geometry, material);
+  sun.position.set(0,1.2,-1)
+  sun.name = "sun"
+  directionalLight1.add(sun); 
+  //scene.add(sun);
+  
+
+  // console.log('Moon globe generated at x: '+ sphere.position.x+' y: '+sphere.position.y+' z: '+sphere.position.z)
 }
 
 function addControls(controlObject) {
@@ -306,8 +379,16 @@ function hideCityNames(){
 /*TODO rotate everything when user is not in control*/
 function animate() {
     requestAnimationFrame(animate); 
-    cloudMesh.rotation.y += 0.0002*Math.random()
-   // FALTA ROTAR LA POINTLIGHT ALREDEDOR DEL EJE Y 
+    cloudMesh.rotation.y += 0.0005
+   
+    sun.position.applyQuaternion(quaternionSun)
+    directionalLight1.position.applyQuaternion(quaternionSun)
+    console.log(directionalLight1.position)
+    console.log(dayNight.material.uniforms.sunDirection.value )
+    dayNight.material.uniforms.sunDirection.value = directionalLight1.position
+
+    // sDirection = new THREE.Vector3(directionalLight1.position.x,directionalLight1.position.y,directionalLight1.position.z)
+    // dayNight.material.uniforms.sunDirection=directionalLight1.position
     
     /*Rotation*/
     if (control.autoRotate){
@@ -347,12 +428,34 @@ function generateAtmosphere(){
   atm_material  = new THREE.MeshPhongMaterial({
     map     : loader.load('./assets/clouds.png'),
     side        : THREE.DoubleSide,
-    opacity     : 0.6,
+    opacity     : 0.9,
     transparent : true,
     depthWrite  : false,
   })
   cloudMesh = new THREE.Mesh(atm_geometry, atm_material)
+  cloudMesh.castShadow = false; //default is false
+  cloudMesh.receiveShadow = true; //default
   scene.add(cloudMesh)
+}
+
+function generateDayNight(){
+  
+  const textureLoader = new THREE.TextureLoader();
+
+  uniforms = {
+    sunDirection: {value: new THREE.Vector3(1,0,0) },
+    dayTexture: { value: textureLoader.load( "./assets/8081_earthmap10k.jpg" ) },
+    nightTexture: { value: textureLoader.load( "./assets/8081_earthlights10k.jpg" ) }
+  };
+  material = new THREE.ShaderMaterial({
+    uniforms: uniforms,
+    vertexShader: vs,
+    fragmentShader: fs,
+    transparent:true,
+    uniformsNeedUpdate:true
+  });
+  dayNight = new THREE.Mesh( new THREE.SphereGeometry( radiusEarth*1.0001, 128, 128 ), material );
+  scene.add( dayNight );
 }
 
 
@@ -365,7 +468,8 @@ function generateEarth(){
         bumpMap: loader.load('./assets/8081_earthbump10k.jpg'),
         bumpScale:0.08,
         specularMap : loader.load('./assets/8081_earthspec10k.jpg'),
-        specular: new THREE.Color(0x323232)
+        // specular: new THREE.Color(0x424242)
+        specular: new THREE.Color(0xffffff)
       });    
     geometry = new THREE.SphereGeometry(radiusEarth, 128, 128); //size
     earth = new THREE.Mesh (geometry, material);
@@ -373,10 +477,6 @@ function generateEarth(){
     earth.position.y = 0
     earth.name = "earth"
     scene.add(earth); 
-
-    
-
-
     //console.log('Earth globe generated at x: '+ sphere.position.x+' y: '+sphere.position.y+' z: '+sphere.position.z)
 }
 

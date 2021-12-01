@@ -3,7 +3,21 @@
     "persons": [
         {
             "id": 0,
-            "name": "Pablo Gibaja",
+            "name": "Pablo",
+            "surname": "Gibaja",
+            "size": 1.0,
+            "flight_color": "0x000000",
+            "car_color":  "0x000000",
+            "ship_color":  "0x000000",
+            "train_color":  "0x000000",
+            "country": "Spain",
+            "city": "Madrid",
+            "lat": "40.416729",
+            "lng": "-3.703339"
+        },{
+            "id": 0,
+            "name": "Paola",
+            "surname": "Peinado",
             "size": 1.0,
             "flight_color": "0x000000",
             "car_color":  "0x000000",
