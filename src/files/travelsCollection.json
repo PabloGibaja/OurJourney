@@ -6,7 +6,7 @@
                 "jumps":[
                     {
                         "type": "flight",
-                        "order": 1,
+                        "order": 0,
                         "people":[
                             "Pablo Gibaja"
                         ],
@@ -28,7 +28,7 @@
                     },
                     {
                         "type": "ship",
-                        "order": 1,
+                        "order": 2,
                         "people":[
                             "Pablo Gibaja"
                         ],
@@ -39,7 +39,7 @@
                     },
                     {
                         "type": "ship",
-                        "order": 1,
+                        "order": 3,
                         "people":[
                             "Pablo Gibaja"
                         ],
@@ -50,7 +50,7 @@
                     },
                     {
                         "type": "ship",
-                        "order": 1,
+                        "order": 4,
                         "people":[
                             "Pablo Gibaja"
                         ],
@@ -61,7 +61,7 @@
                     },
                     {
                         "type": "ship",
-                        "order": 1,
+                        "order": 5,
                         "people":[
                             "Pablo Gibaja"
                         ],
@@ -72,7 +72,7 @@
                     },
                     {
                         "type": "car",
-                        "order": 1,
+                        "order": 6,
                         "people":[
                             "Pablo Gibaja"
                         ],
@@ -83,7 +83,7 @@
                     },
                     {
                         "type": "car",
-                        "order": 1,
+                        "order": 7,
                         "people":[
                             "Pablo Gibaja"
                         ],
@@ -94,7 +94,7 @@
                     },
                     {
                         "type": "flight",
-                        "order": 1,
+                        "order": 8,
                         "people":[
                             "Pablo Gibaja"
                         ],
@@ -111,7 +111,7 @@
                 "jumps":[
                     {
                         "type": "flight",
-                        "order": 1,
+                        "order": 0,
                         "people":[
                             "Pablo Gibaja",
                             "Paola Peinado"
@@ -119,7 +119,7 @@
                         "from": "Madrid",
                         "to": "Marrakesh",
                         "date": "Mar 23, 2020",
-                        "arc":0.05
+                        "arc":0.04
                     },
                     {
                         "type": "car",
@@ -135,7 +135,7 @@
                     },
                     {
                         "type": "car",
-                        "order": 1,
+                        "order": 2,
                         "people":[
                             "Pablo Gibaja",
                             "Paola Peinado"
@@ -143,11 +143,11 @@
                         "from": "Merzouga",
                         "to": "Marrakesh",
                         "date": "Mar 23, 2020",
-                        "arc":0.01
+                        "arc":0.02
                     },
                     {
-                        "type": "car",
-                        "order": 1,
+                        "type": "flight",
+                        "order": 3,
                         "people":[
                             "Pablo Gibaja",
                             "Paola Peinado"
@@ -155,7 +155,7 @@
                         "from": "Marrakesh",
                         "to": "Madrid",
                         "date": "Mar 23, 2020",
-                        "arc":0.01
+                        "arc":0.02
                     }
 
                 ]
@@ -179,20 +179,19 @@
                         "type": "flight",
                         "order": 1,
                         "people":[
-                            "Pablo Gibaja",
-                            "Paola Peinado"
+                            "Pablo Gibaja"
                         ],
                         "from": "New York",
                         "to": "Madrid",
                         "date": "Mar 23, 2020",
-                        "arc":0.01
+                        "arc":0.02
                     }
                     
                 ]
             },
             {
-                "travel_id":2,
-                "travel_name":"Viaje a punta cana",
+                "travel_id":3,
+                "travel_name":"Visita a David",
                 "jumps":[
                     {
                         "type": "flight",
@@ -206,7 +205,7 @@
                         "arc":0.05
                     },
                     {
-                        "type": "flight",
+                        "type": "car",
                         "order": 1,
                         "people":[
                             "Pablo Gibaja"
@@ -214,10 +213,10 @@
                         "from": "Punta Cana",
                         "to": "Santo Domingo",
                         "date": "Mar 23, 2020",
-                        "arc":0.05
+                        "arc":0.01
                     },
                     {
-                        "type": "flight",
+                        "type": "car",
                         "order": 1,
                         "people":[
                             "Pablo Gibaja"
@@ -225,25 +224,24 @@
                         "from": "Santo Domingo",
                         "to": "Punta Cana",
                         "date": "Mar 23, 2020",
-                        "arc":0.05
+                        "arc":0.02
                     },
                     {
                         "type": "flight",
                         "order": 1,
                         "people":[
-                            "Pablo Gibaja",
-                            "Paola Peinado"
+                            "Pablo Gibaja"
                         ],
                         "from": "Punta Cana",
                         "to": "Madrid",
                         "date": "Mar 23, 2020",
-                        "arc":0.01
+                        "arc":0.03
                     }
                     
                 ]
             },
             {
-                "travel_id":3,
+                "travel_id":4,
                 "travel_name":"Viaje a Tailandia",
                 "jumps":[
                     {
@@ -269,7 +267,7 @@
                         "arc":0.05
                     },
                     {
-                        "type": "flight",
+                        "type": "train",
                         "order": 1,
                         "people":[
                             "Pablo Gibaja"
@@ -277,7 +275,7 @@
                         "from": "Bangkok",
                         "to": "Chiang Mai",
                         "date": "Mar 23, 2020",
-                        "arc":0.05
+                        "arc":0.01
                     },
                     {
                         "type": "flight",
@@ -288,7 +286,7 @@
                         "from": "Chiang Mai",
                         "to": "Phi Phi",
                         "date": "Mar 23, 2020",
-                        "arc":0.045
+                        "arc":0.02
                     },
                     {
                         "type": "flight",
@@ -299,7 +297,7 @@
                         "from": "Phi Phi",
                         "to": "Bangkok",
                         "date": "Mar 23, 2020",
-                        "arc":0.04
+                        "arc":0.01
                     },
                     {
                         "type": "flight",
@@ -321,13 +319,13 @@
                         "from": "Dubai",
                         "to": "Madrid",
                         "date": "Mar 23, 2020",
-                        "arc":0.07
+                        "arc":0.04
                     }
                 ]
             },
             {
-                "travel_id":4,
-                "travel_name":"Erasmus",
+                "travel_id":5,
+                "travel_name":"Viaje al Erasmus",
                 "jumps":[
                     {
                         "type": "flight",
@@ -347,17 +345,17 @@
                             "Pablo Gibaja"
                         ],
                         "from": "Barcelona",
-                        "to": "Viena",
+                        "to": "Wien",
                         "date": "Mar 23, 2020",
                         "arc":0.03
                     },
                     {
-                        "type": "flight",
+                        "type": "train",
                         "order": 1,
                         "people":[
                             "Pablo Gibaja"
                         ],
-                        "from": "Viena",
+                        "from": "Wien",
                         "to": "Bratislava",
                         "date": "Mar 23, 2020",
                         "arc":0.04
@@ -376,7 +374,7 @@
                 ]
             },
             {
-                "travel_id":4,
+                "travel_id":6,
                 "travel_name":"Viaje a Turquia",
                 "jumps":[
                     {
@@ -388,10 +386,10 @@
                         "from": "Madrid",
                         "to": "Cappadocia",
                         "date": "Mar 23, 2020",
-                        "arc":0.01
+                        "arc":0.02
                     },
                     {
-                        "type": "flight",
+                        "type": "car",
                         "order": 1,
                         "people":[
                             "Pablo Gibaja"
@@ -399,10 +397,10 @@
                         "from": "Cappadocia",
                         "to": "Ankara",
                         "date": "Mar 23, 2020",
-                        "arc":0.03
+                        "arc":0.01
                     },
                     {
-                        "type": "flight",
+                        "type": "car",
                         "order": 1,
                         "people":[
                             "Pablo Gibaja"
@@ -410,7 +408,7 @@
                         "from": "Ankara",
                         "to": "Istambul",
                         "date": "Mar 23, 2020",
-                        "arc":0.04
+                        "arc":0.01
                     },
                     {
                         "type": "flight",
@@ -421,12 +419,12 @@
                         "from": "Istambul",
                         "to": "Madrid",
                         "date": "Mar 23, 2020",
-                        "arc":0.04
+                        "arc":0.03
                     }
                 ]
             },
             {
-                "travel_id":4,
+                "travel_id":7,
                 "travel_name":"Viaje a Irlanda",
                 "jumps":[
                     {
@@ -441,7 +439,40 @@
                         "arc":0.01
                     },
                     {
-                        "type": "flight",
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "Dublin",
+                        "to": "Galway",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "Galway",
+                        "to": "Limerick",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "Limerick",
+                        "to": "Dublin",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
                         "order": 1,
                         "people":[
                             "Pablo Gibaja"
@@ -454,7 +485,7 @@
                 ]
             },
             {
-                "travel_id":4,
+                "travel_id":8,
                 "travel_name":"Visita a Guti",
                 "jumps":[
                     {
@@ -466,37 +497,577 @@
                         "from": "Madrid",
                         "to": "Brussels",
                         "date": "Mar 23, 2020",
-                        "arc":0.01
+                        "arc":0.02
                     },
                     {
-                        "type": "flight",
+                        "type": "train",
                         "order": 1,
                         "people":[
                             "Pablo Gibaja"
                         ],
                         "from": "Brussels",
-                        "to": "Prague",
+                        "to": "Paderborn",
                         "date": "Mar 23, 2020",
-                        "arc":0.03
+                        "arc":0.01
                     },
                     {
-                        "type": "flight",
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "Paderborn",
+                        "to": "Prague",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
                         "order": 1,
                         "people":[
                             "Pablo Gibaja"
                         ],
                         "from": "Prague",
-                        "to": "Viena",
+                        "to": "Wien",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "Wien",
+                        "to": "Prague",
+                        "date": "Mar 23, 2020",
+                        "arc":0.02
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "Prague",
+                        "to": "Paderborn",
                         "date": "Mar 23, 2020",
                         "arc":0.03
-                    },
+                    }
+                    ,
                     {
                         "type": "flight",
                         "order": 1,
                         "people":[
                             "Pablo Gibaja"
                         ],
-                        "from": "Viena",
+                        "from": "Paderborn",
+                        "to": "Madrid",
+                        "date": "Mar 23, 2020",
+                        "arc":0.03
+                    }
+                ]
+            },
+            {
+                "travel_id":9,
+                "travel_name":"Viaje a Italia",
+                "jumps":[
+                    {
+                        "type": "flight",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Madrid",
+                        "to": "Rome",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Rome",
+                        "to": "Pompei",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Pompei",
+                        "to": "Madrid",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    }
+                ]
+            },
+            {
+                "travel_id":10,
+                "travel_name":"Viaje a Amsterdam",
+                "jumps":[
+                    {
+                        "type": "flight",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Madrid",
+                        "to": "Amsterdam",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Amsterdam",
+                        "to": "Madrid",
+                        "date": "Mar 23, 2020",
+                        "arc":0.02
+                    }
+                ]
+            },
+            {
+                "travel_id":11,
+                "travel_name":"Viaje a Paris",
+                "jumps":[
+                    {
+                        "type": "flight",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Madrid",
+                        "to": "Paris",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Paris",
+                        "to": "Madrid",
+                        "date": "Mar 23, 2020",
+                        "arc":0.02
+                    }
+                ]
+            },
+            {
+                "travel_id":12,
+                "travel_name":"Viaje a UK",
+                "jumps":[
+                    {
+                        "type": "flight",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Madrid",
+                        "to": "Brighton",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Brighton",
+                        "to": "London",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "London",
+                        "to": "Bournemouth",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Bournemouth",
+                        "to": "Brighton",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Brighton",
+                        "to": "Madrid",
+                        "date": "Mar 23, 2020",
+                        "arc":0.02
+                    }
+                ]
+            },
+            {
+                "travel_id":13,
+                "travel_name":"Viaje a Escocia",
+                "jumps":[
+                    {
+                        "type": "flight",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Madrid",
+                        "to": "St.Andrews",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "St.Andrews",
+                        "to": "Edimburg",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Edimburg",
+                        "to": "Madrid",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    }
+                ]
+            },
+            {
+                "travel_id":14,
+                "travel_name":"Viaje a Cork",
+                "jumps":[
+                    {
+                        "type": "flight",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Madrid",
+                        "to": "Cork",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Cork",
+                        "to": "Madrid",
+                        "date": "Mar 23, 2020",
+                        "arc":0.015
+                    }
+                ]
+            },
+            {
+                "travel_id":15,
+                "travel_name":"Viaje a UK-Dublin",
+                "jumps":[
+                    {
+                        "type": "flight",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Madrid",
+                        "to": "Dublin",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Dublin",
+                        "to": "London",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "London",
+                        "to": "Dublin",
+                        "date": "Mar 23, 2020",
+                        "arc":0.015
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Dublin",
+                        "to": "Madrid",
+                        "date": "Mar 23, 2020",
+                        "arc":0.015
+                    }
+                ]
+            },
+            {
+                "travel_id":16,
+                "travel_name":"Viaje con Sofia",
+                "jumps":[
+                    {
+                        "type": "flight",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Madrid",
+                        "to": "Munich",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Munich",
+                        "to": "Salzburg",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Salzburg",
+                        "to": "Wien",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Wien",
+                        "to": "Munich",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Munich",
+                        "to": "Madrid",
+                        "date": "Mar 23, 2020",
+                        "arc":0.015
+                    }
+                ]
+            },
+            {
+                "travel_id":17,
+                "travel_name":"Viaje interrail",
+                "jumps":[
+                    {
+                        "type": "flight",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Madrid",
+                        "to": "Zagreb",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Zagreb",
+                        "to": "Split",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Split",
+                        "to": "Ljubljana",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Ljubljana",
+                        "to": "Budapest",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Budapest",
+                        "to": "Bratislava",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Bratislava",
+                        "to": "Prague",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Prague",
+                        "to": "Madrid",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    }
+                ]
+            },
+            {
+                "travel_id":15,
+                "travel_name":"Viaje a Portugal",
+                "jumps":[
+                    {
+                        "type": "flight",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Madrid",
+                        "to": "Lisbon",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Lisbon",
+                        "to": "Oporto",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Paola Peinado"
+                        ],
+                        "from": "Oporto",
+                        "to": "Madrid",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    }
+                ]
+            },
+            {
+                "travel_id":16,
+                "travel_name":"Viaje a Canarias",
+                "jumps":[
+                    {
+                        "type": "flight",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "Madrid",
+                        "to": "Tenerife",
+                        "date": "Mar 23, 2020",
+                        "arc":0.02
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "Tenerife",
+                        "to": "Gomera",
+                        "date": "Mar 23, 2020",
+                        "arc":0.01
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "Gomera",
+                        "to": "Tenerife",
+                        "date": "Mar 23, 2020",
+                        "arc":0.02
+                    },
+                    {
+                        "type": "car",
+                        "order": 1,
+                        "people":[
+                            "Pablo Gibaja"
+                        ],
+                        "from": "Tenerife",
                         "to": "Madrid",
                         "date": "Mar 23, 2020",
                         "arc":0.03

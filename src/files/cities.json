@@ -19,6 +19,22 @@
         },
         {
             "size": 1.0,
+            "country": "Spain",
+            "name": "Tenerife",
+            "continent":"Africa",
+            "lat": "28.4636296",
+            "lng": "-16.2518467"
+        },
+        {
+            "size": 1.0,
+            "country": "Spain",
+            "name": "Gomera",
+            "continent":"Africa",
+            "lat": "28.103303",
+            "lng": "-17.219358"
+        },
+        {
+            "size": 1.0,
             "country": "Italy",
             "name": "Rome",
             "continent":"Europe",
@@ -27,11 +43,51 @@
         },
         {
             "size": 1.0,
+            "country": "Italy",
+            "name": "Pompei",
+            "continent":"Europe",
+            "lat": "40.74574",
+            "lng": "14.49698"
+        },
+        {
+            "size": 1.0,
             "country": "United Kingdom",
             "name": "London",
             "continent":"Europe",
             "lat": "51.509865",
             "lng": "-0.118092"
+        },
+        {
+            "size": 1.0,
+            "country": "United Kingdom",
+            "name": "St.Andrews",
+            "continent":"Europe",
+            "lat": "56.335054",
+            "lng": "-2.8063431"
+        },
+        {
+            "size": 1.0,
+            "country": "United Kingdom",
+            "name": "Edimburg",
+            "continent":"Europe",
+            "lat": "55.953251",
+            "lng": "-3.188267"
+        },
+        {
+            "size": 1.0,
+            "country": "Ireland",
+            "name": "Cork",
+            "continent":"Europe",
+            "lat": "51.903614",
+            "lng": "-8.468399"
+        },
+        {
+            "size": 1.0,
+            "country": "Netherlands",
+            "name": "Amsterdam",
+            "continent":"Europe",
+            "lat": "52.377956",
+            "lng": "4.897070"
         },
         {
             "size": 1.0,
@@ -51,11 +107,35 @@
         },
         {
             "size": 1.0,
+            "country": "Portugal",
+            "name": "Oporto",
+            "continent":"Europe",
+            "lat": "41.145821",
+            "lng": "-8.613985"
+        },
+        {
+            "size": 1.0,
             "country": "France",
             "name": "Paris",
             "continent":"Europe",
             "lat": "48.864716",
             "lng": "2.349014"
+        },
+        {
+            "size": 1.0,
+            "country": "United Kingdom",
+            "name": "Bournemouth",
+            "continent":"Europe",
+            "lat": "50.718395",
+            "lng": "-1.883377"
+        },
+        {
+            "size": 1.0,
+            "country": "United Kingdom",
+            "name": "Brighton",
+            "continent":"Europe",
+            "lat": "50.827778",
+            "lng": "-0.152778"
         },
         {
             "size": 1.0,
@@ -68,10 +148,42 @@
         {
             "size": 1.0,
             "country": "Austria",
-            "name": "Viena",
+            "name": "Wien",
             "continent":"Europe",
             "lat": "48.210033",
             "lng": "16.363449"
+        },
+        {
+            "size": 1.0,
+            "country": "Austria",
+            "name": "Salzburg",
+            "continent":"Europe",
+            "lat": "47.811195",
+            "lng": "13.033229"
+        },
+        {
+            "size": 1.0,
+            "country": "Croatia",
+            "name": "Zagreb",
+            "continent":"Europe",
+            "lat": "45.815399",
+            "lng": "15.966568"
+        },
+        {
+            "size": 1.0,
+            "country": "Croatia",
+            "name": "Split",
+            "continent":"Europe",
+            "lat": "43.508133",
+            "lng": "16.440193"
+        },
+        {
+            "size": 1.0,
+            "country": "Slovenia",
+            "name": "Ljubljana",
+            "continent":"Europe",
+            "lat": "46.056946",
+            "lng": "14.505751"
         },
         {
             "size": 1.0,
@@ -115,6 +227,22 @@
         },
         {
             "size": 1.0,
+            "country": "Germany",
+            "name": "Munich",
+            "continent":"Europe",
+            "lat": "48.137154",
+            "lng": "11.576124"
+        },
+        {
+            "size": 1.0,
+            "country": "Germany",
+            "name": "Paderborn",
+            "continent":"Europe",
+            "lat": "51.716667",
+            "lng": "8.766667"
+        },
+        {
+            "size": 1.0,
             "country": "Finland",
             "name": "Porvoo",
             "continent":"Europe",
@@ -152,6 +280,22 @@
             "continent":"Europe",
             "lat": "53.350140",
             "lng": "-6.266155"
+        },
+        {
+            "size": 1.0,
+            "country": "Ireland",
+            "name": "Galway",
+            "continent":"Europe",
+            "lat": "53.270962",
+            "lng": "-9.062691"
+        },
+        {
+            "size": 1.0,
+            "country": "Ireland",
+            "name": "Limerick",
+            "continent":"Europe",
+            "lat": "52.668018",
+            "lng": "-8.630498"
         },
         {
             "size": 1.0,
