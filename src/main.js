@@ -84,7 +84,7 @@ void main( void ) {
   vec3 nightColor = texture2D( nightTexture, vUv ).rgb;
 
   // compute cosine sun to normal so -1 is away from sun and +1 is toward sun.
-  float cosineAngleSunToNormal = dot(normalize(vNormal), sunDirection);
+  float cosineAngleSunToNormal = dot(normalize(vNormal), -sunDirection);
 
   // sharpen the edge beween the transition
   cosineAngleSunToNormal = clamp( cosineAngleSunToNormal * 25.0, -1.0, 1.0);
@@ -297,20 +297,23 @@ function createSun(){
   // pointLight = new THREE.PointLight(0xffffff, 1);
   // pointLight.position.set(18, 1.2, 0);
   directionalLight1 = new THREE.DirectionalLight( 0xffffff );
-  directionalLight1.position.set(1, 0, 0).normalize();
+  directionalLight1.position.set(1, 0, 1).normalize();
   scene.add( directionalLight1 );
+  
+  directionalLight4 = new THREE.DirectionalLight( 0xffffff );
+  directionalLight4.position.set(0, 1, 0);
+  scene.add( directionalLight4 );
 
 
   const loader = new THREE.TextureLoader();
   const material = new THREE.MeshPhongMaterial({
       color: 0xf1f1f1
-
     });    
   geometry = new THREE.SphereGeometry(0.001, 32, 32); //size
   sun = new THREE.Mesh (geometry, material);
   sun.position.set(0,1.2,-1)
   sun.name = "sun"
-  directionalLight1.add(sun); 
+  scene.add(sun); 
   //scene.add(sun);
   
 
@@ -379,13 +382,14 @@ function hideCityNames(){
 /*TODO rotate everything when user is not in control*/
 function animate() {
     requestAnimationFrame(animate); 
-    cloudMesh.rotation.y += 0.0005
+    cloudMesh.rotation.y += 0.0005 
    
     sun.position.applyQuaternion(quaternionSun)
     directionalLight1.position.applyQuaternion(quaternionSun)
     console.log(directionalLight1.position)
     console.log(dayNight.material.uniforms.sunDirection.value )
     dayNight.material.uniforms.sunDirection.value = directionalLight1.position
+    
 
     // sDirection = new THREE.Vector3(directionalLight1.position.x,directionalLight1.position.y,directionalLight1.position.z)
     // dayNight.material.uniforms.sunDirection=directionalLight1.position
@@ -431,6 +435,7 @@ function generateAtmosphere(){
     opacity     : 0.9,
     transparent : true,
     depthWrite  : false,
+    emissive: 0xffffff
   })
   cloudMesh = new THREE.Mesh(atm_geometry, atm_material)
   cloudMesh.castShadow = false; //default is false
@@ -466,7 +471,7 @@ function generateEarth(){
     const material = new THREE.MeshPhongMaterial({
         map: loader.load('./assets/8081_earthmap10k.jpg'),
         bumpMap: loader.load('./assets/8081_earthbump10k.jpg'),
-        bumpScale:0.08,
+        bumpScale:0.4,
         specularMap : loader.load('./assets/8081_earthspec10k.jpg'),
         // specular: new THREE.Color(0x424242)
         specular: new THREE.Color(0x424242)
@@ -523,7 +528,7 @@ function generateCityName(city,name, x, y, z){
   {
 	var geometry = new THREE.TextGeometry(name, {font: font, size: 0.005, height: 0.0001}); 
   geometry.center();
-	var material = new THREE.MeshPhongMaterial({color:0xffffff});
+	var material = new THREE.MeshPhongMaterial({color:0xffffff, emissive:0xffffff});
 	var cityText = new THREE.Mesh(geometry, material);
   cityText.name="text of: "+name
   cityText.type = "city_name"
