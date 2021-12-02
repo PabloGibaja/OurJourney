@@ -191,9 +191,8 @@ function init(){
       this.rotationSpeed = 0.001;
       this.enableTravelAnimation = true
       this.showCityNames = true
+      this.peopleList = []
     };
-
-
 
     
      /* MAIN FLOW */ 
@@ -326,6 +325,10 @@ function addControls(controlObject) {
   gui.add(controlObject, 'rotationSpeed', 0, 0.02);
   gui.add(controlObject, 'enableTravelAnimation',true,false)
   gui.add(controlObject, 'showCityNames',true,false)
+  filters = gui.addFolder('Filters')
+  filterPeople = filters.addFolder('People')
+  filterContinent = filters.addFolder('Continent')
+  filterTransport = filters.addFolder('Transport')
   
   
 }
@@ -356,7 +359,7 @@ function animateLine(){
 function inanimateLine(){
   for (let i=0; i < scene.children.length ; i++){
     if (scene.children[i].parent_type === "travel"){
-      scene.children[i].material.transparent = false
+      scene.children[i].material.transparent = true
     }
 }}
 
@@ -480,7 +483,7 @@ function generateEarth(){
 
 // to use the new travelsCollection model
 function generateJump(jumpFromFile,colour){
-  console.log(jumpFromFile)
+  //console.log(jumpFromFile)
   fromCoordinates = getCoordinatesFromCityName(jumpFromFile.from) 
   toCoordinates =  getCoordinatesFromCityName(jumpFromFile.to)
   from = getCoordinatesFromLatLng(fromCoordinates.lat,fromCoordinates.long,radiusEarth)

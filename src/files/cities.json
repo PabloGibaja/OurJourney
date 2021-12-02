@@ -19,11 +19,35 @@
         },
         {
             "size": 1.0,
+            "country": "Spain",
+            "name": "Tenerife",
+            "continent":"Africa",
+            "lat": "28.4636296",
+            "lng": "-16.2518467"
+        },
+        {
+            "size": 1.0,
+            "country": "Spain",
+            "name": "Gomera",
+            "continent":"Africa",
+            "lat": "28.103303",
+            "lng": "-17.219358"
+        },
+        {
+            "size": 1.0,
             "country": "Italy",
             "name": "Rome",
             "continent":"Europe",
             "lat": "41.902782",
             "lng": "12.496366"
+        },
+        {
+            "size": 1.0,
+            "country": "Italy",
+            "name": "Pompei",
+            "continent":"Europe",
+            "lat": "40.74574",
+            "lng": "14.49698"
         },
         {
             "size": 1.0,
@@ -80,6 +104,14 @@
             "continent":"Europe",
             "lat": "38.736946",
             "lng": "-9.142685"
+        },
+        {
+            "size": 1.0,
+            "country": "Portugal",
+            "name": "Oporto",
+            "continent":"Europe",
+            "lat": "41.145821",
+            "lng": "-8.613985"
         },
         {
             "size": 1.0,
@@ -203,6 +235,14 @@
         },
         {
             "size": 1.0,
+            "country": "Germany",
+            "name": "Paderborn",
+            "continent":"Europe",
+            "lat": "51.716667",
+            "lng": "8.766667"
+        },
+        {
+            "size": 1.0,
             "country": "Finland",
             "name": "Porvoo",
             "continent":"Europe",
@@ -240,6 +280,22 @@
             "continent":"Europe",
             "lat": "53.350140",
             "lng": "-6.266155"
+        },
+        {
+            "size": 1.0,
+            "country": "Ireland",
+            "name": "Galway",
+            "continent":"Europe",
+            "lat": "53.270962",
+            "lng": "-9.062691"
+        },
+        {
+            "size": 1.0,
+            "country": "Ireland",
+            "name": "Limerick",
+            "continent":"Europe",
+            "lat": "52.668018",
+            "lng": "-8.630498"
         },
         {
             "size": 1.0,
