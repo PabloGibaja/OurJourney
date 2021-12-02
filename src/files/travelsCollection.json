@@ -347,7 +347,7 @@
                             "Pablo Gibaja"
                         ],
                         "from": "Barcelona",
-                        "to": "Viena",
+                        "to": "Wien",
                         "date": "Mar 23, 2020",
                         "arc":0.03
                     },
@@ -357,7 +357,7 @@
                         "people":[
                             "Pablo Gibaja"
                         ],
-                        "from": "Viena",
+                        "from": "Wien",
                         "to": "Bratislava",
                         "date": "Mar 23, 2020",
                         "arc":0.04
@@ -486,7 +486,7 @@
                             "Pablo Gibaja"
                         ],
                         "from": "Prague",
-                        "to": "Viena",
+                        "to": "Wien",
                         "date": "Mar 23, 2020",
                         "arc":0.03
                     },
@@ -496,7 +496,7 @@
                         "people":[
                             "Pablo Gibaja"
                         ],
-                        "from": "Viena",
+                        "from": "Wien",
                         "to": "Madrid",
                         "date": "Mar 23, 2020",
                         "arc":0.03

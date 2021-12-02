@@ -49,8 +49,6 @@ const directionalLight = new THREE.DirectionalLight( 0xaaff33, 0 );
 directionalLight.position.set(-1, 1, 0.5).normalize();
 scene.add( directionalLight );
 
-const textureLoader = new THREE.TextureLoader();
-
 const uniforms = {
   sunDirection: {value: new THREE.Vector3(1,0.1,0) },
   dayTexture: { value: textureLoader.load( "./assets/8081_earthmap10k.jpg" ) },

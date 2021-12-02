@@ -386,13 +386,7 @@ function animate() {
    
     sun.position.applyQuaternion(quaternionSun)
     directionalLight1.position.applyQuaternion(quaternionSun)
-    console.log(directionalLight1.position)
-    console.log(dayNight.material.uniforms.sunDirection.value )
     dayNight.material.uniforms.sunDirection.value = directionalLight1.position
-    
-
-    // sDirection = new THREE.Vector3(directionalLight1.position.x,directionalLight1.position.y,directionalLight1.position.z)
-    // dayNight.material.uniforms.sunDirection=directionalLight1.position
     
     /*Rotation*/
     if (control.autoRotate){
@@ -463,7 +457,6 @@ function generateDayNight(){
   scene.add( dayNight );
 }
 
-
 /* Generate Earth globe in origin*/
 function generateEarth(){
     //var material = new THREE.MeshBasicMaterial({color:0x0000ff,wireframe:true});
@@ -485,9 +478,9 @@ function generateEarth(){
     //console.log('Earth globe generated at x: '+ sphere.position.x+' y: '+sphere.position.y+' z: '+sphere.position.z)
 }
 
-
 // to use the new travelsCollection model
 function generateJump(jumpFromFile,colour){
+  console.log(jumpFromFile)
   fromCoordinates = getCoordinatesFromCityName(jumpFromFile.from) 
   toCoordinates =  getCoordinatesFromCityName(jumpFromFile.to)
   from = getCoordinatesFromLatLng(fromCoordinates.lat,fromCoordinates.long,radiusEarth)
@@ -521,7 +514,6 @@ function generateJump(jumpFromFile,colour){
 
 }
 
-
 function generateCityName(city,name, x, y, z){
   var loader = new THREE.FontLoader();
   var font = loader.load( './src/fonts/helvetiker.typeface.json', function(font) 
@@ -539,7 +531,6 @@ function generateCityName(city,name, x, y, z){
 	scene.add(cityText);
   });
 }
-
 
 /* Receives lat, long of city and generate the city in the globe */
 function generateCity(cityFromFile){
@@ -659,7 +650,6 @@ function onDocumentMouseDown(event)
   }
   
 }
-
 
 //document.addEventListener('mousedown', onDocumentMouseDown, false);
 //document.addEventListener('mousemove', onDocumentMouseMove, false);
